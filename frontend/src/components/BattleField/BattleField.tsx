@@ -1,6 +1,5 @@
 import st from './BattleField.module.scss'
 import {FC} from 'react'
-import {Cell} from "../Cell/Cell";
 import {Line} from "./Line";
 import {Field} from "../../models/Field";
 import {Sea} from "../Sea/Sea";

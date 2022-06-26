@@ -1,11 +1,11 @@
-import st from './Sea.scss'
 import {FC} from 'react'
 import {Field} from "../../models/Field";
-import {Cell} from "../Cell/Cell";
+import {OneCell} from "../Cell/OneCell";
+
 
 interface SeaProps {
-    sea: Field
-  }
+  sea: Field
+}
 
 export const Sea: FC<SeaProps> = ({sea}) => {
 
@@ -14,9 +14,10 @@ export const Sea: FC<SeaProps> = ({sea}) => {
       {
         sea.field.map((line, y) =>
           line.map((cell, x) =>
-            <Cell
-              key = {cell.id}
-              n={y * 10 + x} />))
+            <OneCell
+              key={cell.id}
+              cell={cell}
+            />))
       }
     </>
   )

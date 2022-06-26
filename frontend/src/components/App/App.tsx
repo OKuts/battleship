@@ -6,7 +6,7 @@ import {Field} from "../../models/Field";
 export const App: FC = () => {
   const [battleField, setBattleField] = useState(new Field())
 
-  useEffect(()=> {
+  useEffect(() => {
     const newBattleField = new Field()
     newBattleField.initField()
     setBattleField(newBattleField)
