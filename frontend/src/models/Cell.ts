@@ -1,7 +1,7 @@
 export class Cell {
   readonly x: number
   readonly y: number
-  isUse: boolean = false
+  isUse: boolean = true
   isEmpty: boolean = true
   id: string
 
@@ -11,6 +11,6 @@ export class Cell {
     ) {
     this.x = x
     this.y = y
-    this.id = `${this.x}${this.y}`
+    this.id = `${this.y}${this.x}`
   }
 }
