@@ -3,7 +3,11 @@ import {FC} from 'react'
 import {Line} from "./Line";
 import {Sea} from "../Sea/Sea";
 
-export const BattleField: FC = () => {
+type BattleFieldProps = {
+  enemy: boolean
+}
+
+export const BattleField: FC<BattleFieldProps> = ({enemy}) => {
 
   return (
     <div>
@@ -16,7 +20,7 @@ export const BattleField: FC = () => {
           <Line start={65}/>
         </div>
         <div className={st.seaField}>
-          <Sea />
+          <Sea enemy = {enemy}/>
         </div>
       </div>
     </div>

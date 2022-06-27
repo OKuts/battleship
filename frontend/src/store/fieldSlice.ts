@@ -1,35 +1,50 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {Cell} from "../models/Cell";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type FieldType = {
-  field: Cell[][]
+export interface ICell {
+    x: number
+    y: number
+    isUse: boolean
+    isEmpty: boolean
+    id: string
 }
 
+export type FieldType = {
+  fieldMy: ICell[][],
+  fieldEnemy: ICell[][],
+}
+
+const initField = () => {
+  return new Array(10).fill(new Array(10).fill(0))
+  .map((line, y) => line.map((_: number, x: number) => ({
+    x,
+    y,
+    isUse: false,
+    isEmpty: true,
+    id: `${y}${x}`
+  })))
+}
+
+
 const initialState: FieldType = {
-  field: new Array(10).fill(new Array(10).fill(0))
-    .map((line, y) => line.map((_: number, x: number) => new Cell(x, y)))
+  fieldMy: initField(),
+  fieldEnemy: initField()   
 }
 
 export const fieldSlice = createSlice({
-  name: 'field',
+  name: 'fields',
   initialState,
   reducers: {
-    selectCell(state, action) {
-      console.log(action.payload)
-      // state.field.forEach((line, y) =>
-      //   line.forEach((_, x) => {
-      //     if (state.field[x][y].id === action.payload) {
-      //       state.field[x][y].isUse = true
-      //       console.log(x, y)
-      //     }
-      //   })
-      // )},
-    }
+    selectMyCell(state, action: PayloadAction<string>) {
+      state.fieldMy[Number(action.payload[0])][Number(action.payload[1])].isUse = true
+    },
+    selectEnemyCell(state, action: PayloadAction<string>) {
+      state.fieldEnemy[Number(action.payload[0])][Number(action.payload[1])].isUse = true
+    },
     // updateField(state, action) {
     //   return state
     // }
-  }
+  },
 })
 
-export const { selectCell } = fieldSlice.actions
+export const { selectMyCell, selectEnemyCell } = fieldSlice.actions
 export default fieldSlice.reducer

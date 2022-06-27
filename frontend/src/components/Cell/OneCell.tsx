@@ -1,19 +1,19 @@
 import st from './OneCell.module.scss'
 import {FC} from 'react'
-import {Cell} from "../../models/Cell";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {selectCell} from "../../store/fieldSlice";
+import {ICell, selectMyCell, selectEnemyCell} from "../../store/fieldSlice";
 
 interface CellProps {
-  cell: Cell
+  cell: ICell
+  enemy: boolean
 }
 
-export const OneCell: FC<CellProps> = ({cell}) => {
+export const OneCell: FC<CellProps> = ({cell, enemy}) => {
   const dispatch = useAppDispatch()
   console.log('rerender')
   return (
     <div
-      onClick={() => dispatch(selectCell(cell.id))}
+      onClick={() => dispatch(enemy ? selectEnemyCell(cell.id) : selectMyCell(cell.id))}
       id={`${cell.id}`}
       className={
         cell.isUse
