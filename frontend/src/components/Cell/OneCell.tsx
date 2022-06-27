@@ -1,22 +1,25 @@
 import st from './OneCell.module.scss'
-import {FC, MouseEventHandler} from 'react'
+import {FC} from 'react'
 import {Cell} from "../../models/Cell";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {selectCell} from "../../store/fieldSlice";
 
 interface CellProps {
   cell: Cell
 }
 
 export const OneCell: FC<CellProps> = ({cell}) => {
-
-  const handlerClick: MouseEventHandler<HTMLDivElement> = (e): void => {
-    console.log(e.target.id)
-  }
-
+  const dispatch = useAppDispatch()
+  console.log('rerender')
   return (
     <div
-      onClick = {handlerClick}
-      id = {`${ cell.id }`}
-      className = {cell.x === 9 ? st.seaCellLast : st.seaCell }
+      onClick={() => dispatch(selectCell(cell.id))}
+      id={`${cell.id}`}
+      className={
+        cell.isUse
+          ? cell.x === 9 ? st.cellMarkLast : st.cellMark
+          : cell.x === 9 ? st.seaCellLast : st.cell
+      }
     >
     </div>
   )

@@ -1,18 +1,13 @@
 import {FC} from 'react'
-import {Field} from "../../models/Field";
 import {OneCell} from "../Cell/OneCell";
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
-
-interface SeaProps {
-  sea: Field
-}
-
-export const Sea: FC<SeaProps> = ({sea}) => {
-
+export const Sea: FC = () => {
+  const { field } = useAppSelector(state => state.field)
   return (
     <>
       {
-        sea.field.map((line, y) =>
+        field.map((line, y) =>
           line.map((cell, x) =>
             <OneCell
               key={cell.id}

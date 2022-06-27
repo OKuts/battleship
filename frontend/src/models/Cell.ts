@@ -1,7 +1,7 @@
 export class Cell {
   readonly x: number
   readonly y: number
-  isUse: boolean = true
+  isUse: boolean = false
   isEmpty: boolean = true
   id: string
 
