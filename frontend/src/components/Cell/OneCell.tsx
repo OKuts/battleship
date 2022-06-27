@@ -10,7 +10,7 @@ interface CellProps {
 
 export const OneCell: FC<CellProps> = ({cell, enemy}) => {
   const dispatch = useAppDispatch()
-  console.log('rerender')
+  
   return (
     <div
       onClick={() => dispatch(enemy ? selectEnemyCell(cell.id) : selectMyCell(cell.id))}
