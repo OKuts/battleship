@@ -1,26 +1,23 @@
 import {FC} from 'react'
-import {OneCell} from "../Cell/OneCell";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import {IFieldType} from "../../store/types/field";
+import {CellMy} from "../Cell/CellMy";
+import {CellEnemy} from "../Cell/CellEnemy";
 
 type SeaProps = {
-  enemy: boolean
+  field: IFieldType
 }
 
-export const Sea: FC<SeaProps> = ({enemy}) => {
-  const  { fieldMy, fieldEnemy } = useAppSelector(state => state.field)
-
-  const field = enemy ? fieldEnemy : fieldMy
+export const Sea: FC<SeaProps> = ({field}) => {
 
    return (
     <>
       {
-        field.map((line, y) =>
+        field.arr.map((line, y) =>
           line.map((cell, x) =>
-            <OneCell
-              enemy = {enemy}
-              key={cell.id}
-              cell={cell}
-            />))
+            field.isEnemy
+              ? <CellEnemy key={cell.id} cell={cell} />
+              : <CellMy key={cell.id} cell={cell} />
+          ))
       }
     </>
   )

@@ -2,12 +2,13 @@ import st from './BattleField.module.scss'
 import {FC} from 'react'
 import {Line} from "./Line";
 import {Sea} from "../Sea/Sea";
+import {IFieldType} from "../../store/types/field";
 
 type BattleFieldProps = {
-  enemy: boolean
+  field: IFieldType
 }
 
-export const BattleField: FC<BattleFieldProps> = ({enemy}) => {
+export const BattleField: FC<BattleFieldProps> = ({field}) => {
 
   return (
     <div>
@@ -20,7 +21,7 @@ export const BattleField: FC<BattleFieldProps> = ({enemy}) => {
           <Line start={65}/>
         </div>
         <div className={st.seaField}>
-          <Sea enemy = {enemy}/>
+          <Sea field={field}/>
         </div>
       </div>
     </div>

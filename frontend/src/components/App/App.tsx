@@ -1,15 +1,18 @@
 import st from './App.module.scss'
 import {FC} from 'react'
 import { BattleField } from '../BattleField/BattleField'
+import {useAppSelector} from "../../hooks/useAppDispatch";
 
 export const App: FC = () => {
+  const  { fieldMy, fieldEnemy } = useAppSelector(state => state.field)
+
   return (
     <div className={st.app}>
       <div className={st.field}>
-        <BattleField enemy = {false}/>
+        <BattleField field={fieldMy}/>
       </div>
       <div className={st.field}>
-        <BattleField enemy = {true}/>
+        <BattleField field={fieldEnemy}/>
       </div>
     </div>
   )

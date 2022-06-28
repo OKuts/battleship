@@ -1,44 +1,22 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IFieldState} from "./types/field";
+import {initField} from "../utils/initField";
 
-export interface ICell {
-    x: number
-    y: number
-    isUse: boolean
-    isEmpty: boolean
-    id: string
-}
-
-export type FieldType = {
-  fieldMy: ICell[][],
-  fieldEnemy: ICell[][],
-}
-
-const initField = () => {
-  return new Array(10).fill(new Array(10).fill(0))
-  .map((line, y) => line.map((_: number, x: number) => ({
-    x,
-    y,
-    isUse: false,
-    isEmpty: true,
-    id: `${y}${x}`
-  })))
-}
-
-
-const initialState: FieldType = {
-  fieldMy: initField(),
-  fieldEnemy: initField()   
+const initialState: IFieldState = {
+  fieldMy: initField(false),
+  fieldEnemy: initField(true)
 }
 
 export const fieldSlice = createSlice({
   name: 'fields',
   initialState,
+
   reducers: {
     selectMyCell(state, action: PayloadAction<string>) {
-      state.fieldMy[Number(action.payload[0])][Number(action.payload[1])].isUse = true
+      console.log(action.payload, ' My field')
     },
     selectEnemyCell(state, action: PayloadAction<string>) {
-      state.fieldEnemy[Number(action.payload[0])][Number(action.payload[1])].isUse = true
+      state.fieldEnemy.arr[Number(action.payload[0])][Number(action.payload[1])].isUse = true
     },
     // updateField(state, action) {
     //   return state
