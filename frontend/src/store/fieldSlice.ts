@@ -15,14 +15,17 @@ export const fieldSlice = createSlice({
     selectMyCell(state, action: PayloadAction<string>) {
       console.log(action.payload, ' My field')
     },
+
     selectEnemyCell(state, action: PayloadAction<string>) {
       state.fieldEnemy.arr[Number(action.payload[0])][Number(action.payload[1])].isUse = true
     },
-    // updateField(state, action) {
-    //   return state
-    // }
+
+    updateFields(state) {
+      console.log('Update')
+      state.fieldEnemy = initialState.fieldEnemy
+    }
   },
 })
 
-export const { selectMyCell, selectEnemyCell } = fieldSlice.actions
+export const { selectMyCell, selectEnemyCell, updateFields } = fieldSlice.actions
 export default fieldSlice.reducer

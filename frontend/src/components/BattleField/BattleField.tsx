@@ -3,13 +3,14 @@ import {FC} from 'react'
 import {Line} from "./Line";
 import {Sea} from "../Sea/Sea";
 import {IFieldType} from "../../store/types/field";
+import { Port } from '../Port/Port';
 
 type BattleFieldProps = {
   field: IFieldType
 }
 
 export const BattleField: FC<BattleFieldProps> = ({field}) => {
-
+  
   return (
     <div>
       <div className={st.numberLine}>
@@ -22,6 +23,7 @@ export const BattleField: FC<BattleFieldProps> = ({field}) => {
         </div>
         <div className={st.seaField}>
           <Sea field={field}/>
+          {!field.isEnemy && <Port />}
         </div>
       </div>
     </div>

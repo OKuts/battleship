@@ -2,12 +2,6 @@
   display: flex;
 }
 
-.seaField {
-  display: flex;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #888;
-}
-
 .cell {
   width: 30px;
   height: 30px;
@@ -19,3 +13,4 @@
 .letterField {
   display: flex;
 }
+

@@ -1,4 +1,4 @@
-import st from './Cell.module.scss'
+import st from './Sea.module.scss'
 import {FC} from 'react'
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {selectMyCell, selectEnemyCell} from "../../store/fieldSlice";
@@ -12,15 +12,11 @@ export const CellEnemy: FC<CellProps> = ({cell}) => {
   const dispatch = useAppDispatch()
 
   return (
-    <div
+    <td
       onClick={() => dispatch(selectEnemyCell(cell.id))}
       id={`${cell.id}`}
-      className={
-        cell.isUse
-          ? cell.x === 9 ? st.cellMarkLast : st.cellMark
-          : cell.x === 9 ? st.seaCellLast : st.cell
-      }
+      className={cell.isUse ? st.cellMark : ''}
     >
-    </div>
+    </td>
   )
 }

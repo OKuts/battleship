@@ -15,5 +15,3 @@ export interface IFieldState {
   fieldMy: IFieldType
   fieldEnemy: IFieldType
 }
-
-
