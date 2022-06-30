@@ -5,7 +5,13 @@
 }
 
 .shipPart {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     background-color: aquamarine;
+}
+
+.moveShip {
+    composes: ship;
+    position: absolute;
+    top: 0;
 }

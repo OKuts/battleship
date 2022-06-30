@@ -10,11 +10,15 @@ export const shipsSlice = createSlice({
   initialState,
 
   reducers: {
-    // selectMyCell(state, action: PayloadAction<string>) {
-    //   console.log(action.payload, ' My field')
-    // },
+    changeIsMove(state, action) {
+      const currentShip = state.flot.find(ship => ship.id === action.payload)
+      if (currentShip) {
+        currentShip.isMove = !currentShip.isMove
+
+      }
+    },
   },
 })
 
-export const {  } = shipsSlice.actions
+export const { changeIsMove } = shipsSlice.actions
 export default shipsSlice.reducer

@@ -10,7 +10,15 @@ type BattleFieldProps = {
 }
 
 export const BattleField: FC<BattleFieldProps> = ({field}) => {
-  
+
+  const handlerMouseMove = (e: any) => {
+    if (!field.isEnemy) {
+      const parent = e.target.parentNode.getBoundingClientRect();
+      const element = e.target.getBoundingClientRect();
+      console.log(parent.left, element.left)
+    }
+  }
+
   return (
     <div>
       <div className={st.numberLine}>
@@ -21,7 +29,9 @@ export const BattleField: FC<BattleFieldProps> = ({field}) => {
         <div>
           <Line start={65}/>
         </div>
-        <div className={st.seaField}>
+        <div
+          onMouseMove={handlerMouseMove}
+          className={!field.isEnemy ? st.myField : ''}>
           <Sea field={field}/>
           {!field.isEnemy && <Port />}
         </div>
