@@ -5,13 +5,17 @@
 }
 
 .shipPart {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     background-color: aquamarine;
 }
 
 .moveShip {
     composes: ship;
     position: absolute;
-    top: 0;
+    margin: 0;
+}
+
+.currentShip {
+    display: flex;
 }

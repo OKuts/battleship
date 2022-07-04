@@ -17,5 +17,9 @@ export interface IShip {
     place: Place
     x: number
     y: number
-    isMove: boolean
+}
+
+export interface IInitialState {
+    flot: IShip[],
+    selectedShip: null | number
 }

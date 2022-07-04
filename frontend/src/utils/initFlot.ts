@@ -10,7 +10,6 @@ const initShip = (n: number, i: number): IShip => {
         place: Place.PORT,
         x: -1,
         y: -1,
-        isMove: false,
     }
 }
 

@@ -7,14 +7,4 @@ interface CellProps {
   cell: ICell
 }
 
-export const CellMy: FC<CellProps> = ({cell}) => {
-  const dispatch = useAppDispatch()
-
-  return (
-    <td
-      onClick={() => dispatch(selectMyCell(cell.id))}
-      id={`${cell.id}`}
-    >
-    </td>
-  )
-}
+export const CellMy: FC<CellProps> = ({cell}) => <td id={`${cell.id}`}></td>

@@ -1,11 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
 import fieldReducer from './fieldSlice'
 import flotReducer from './shipSlice'
+import mouseReducer from './mouseSlice'
 
 export const store =  configureStore ({
     reducer: {
         field: fieldReducer,
-        flot: flotReducer
+        flot: flotReducer,
+        mouse: mouseReducer
     },
 })
 
