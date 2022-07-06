@@ -1,6 +1,4 @@
 import {FC} from 'react'
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {selectMyCell} from "../../store/fieldSlice";
 import {ICell} from "../../store/types/field";
 
 interface CellProps {

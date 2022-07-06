@@ -6,23 +6,25 @@ import st from './Sea.module.scss'
 
 type SeaProps = {
   field: IFieldType
+  isEnemy: boolean
 }
 
-export const Sea: FC<SeaProps> = ({field}) => {
-    
-   return <table className={st.table}>
-      <tbody>
-        {
-          field.arr.map((line, y) => {
-            return <tr key={y}>
-              {line.map((cell, x) =>
-                field.isEnemy
-                  ? <CellEnemy key={cell.id} cell={cell} />
-                  : <CellMy key={cell.id} cell={cell} />
-              )}
-            </tr>
-          })
-        }
-      </tbody>
-    </table>
+export const Sea: FC<SeaProps> = ({field, isEnemy}) => {
+
+
+  return <table className={st.table}>
+    <tbody>
+    {
+      field.arr.map((line, y) => {
+        return <tr key={y}>
+          {line.map((cell, x) =>
+            isEnemy
+              ? <CellEnemy key={cell.id} cell={cell}/>
+              : <CellMy key={cell.id} cell={cell}/>
+          )}
+        </tr>
+      })
+    }
+    </tbody>
+  </table>
 }

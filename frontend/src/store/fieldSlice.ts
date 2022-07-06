@@ -4,7 +4,8 @@ import {initField} from "../utils/initField";
 
 const initialState: IFieldState = {
   fieldMy: initField(false),
-  fieldEnemy: initField(true)
+  fieldEnemy: initField(true),
+  start: {x: 0, y: 0}
 }
 
 export const fieldSlice = createSlice({
@@ -21,11 +22,15 @@ export const fieldSlice = createSlice({
     },
 
     updateFields(state) {
-      console.log('Update')
       state.fieldEnemy = initialState.fieldEnemy
+    },
+
+    setStart (state, action) {
+      state.start.x = action.payload.x
+      state.start.y = action.payload.y
     }
   },
 })
 
-export const { selectMyCell, selectEnemyCell, updateFields } = fieldSlice.actions
+export const { selectMyCell, selectEnemyCell, updateFields, setStart } = fieldSlice.actions
 export default fieldSlice.reducer

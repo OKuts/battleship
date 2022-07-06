@@ -11,12 +11,12 @@ export const mouseSlice = createSlice({
   initialState,
 
   reducers: {
-    setDxDy(state, action) {
-      state.dX = action.payload.x
-      state.dY = action.payload.y
-    },
+    // setDxDy(state, action) {
+    //   state.dX = action.payload.x
+    //   state.dY = action.payload.y
+    // },
   },
 })
 
-export const { setDxDy } = mouseSlice.actions
+export const {  } = mouseSlice.actions
 export default mouseSlice.reducer

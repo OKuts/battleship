@@ -8,10 +8,13 @@ export interface ICell {
 
 export interface IFieldType {
   arr: ICell[][],
-  isEnemy: boolean
 }
 
 export interface IFieldState {
   fieldMy: IFieldType
   fieldEnemy: IFieldType
+  start: {
+    x: number
+    y: number
+  }
 }

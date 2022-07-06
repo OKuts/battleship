@@ -1,26 +1,38 @@
-import {MouseEvent} from 'react'
+import {MouseEvent, useEffect, useRef} from 'react'
 import st from './BattleField.module.scss'
 import {FC} from 'react'
 import {Line} from "./Line";
 import {Sea} from "../Sea/Sea";
-import {IFieldType} from "../../store/types/field";
 import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
+import {useAppSelector} from "../../hooks/useAppDispatch";
+import {changePositionSelectedShip, removeCurrentShip} from "../../store/shipSlice";
+import {setStart} from "../../store/fieldSlice";
 
-type BattleFieldProps = {
-  field: IFieldType
-}
-
-export const BattleField: FC<BattleFieldProps> = ({field}) => {
+export const BattleField: FC = () => {
   const dispatch = useDispatch()
+  const ref = useRef<HTMLDivElement>(null)
+  const {selectedShip} = useAppSelector(state => state.flot)
+  const  { fieldMy, start } = useAppSelector(state => state.field)
 
   const handlerMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!field.isEnemy) {
-      // console.log(e.target.parentElement.id)
-      // console.log(e)
-      // console.log(e.target.id)
+    if (selectedShip !== null) {
+      const x = e.clientX - start.x - 15
+      const y = e.clientY - start.y - 15
+      dispatch(changePositionSelectedShip({x, y}))
     }
   }
+
+  const handlerMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+    dispatch(removeCurrentShip())
+  }
+
+  useEffect(()=>{
+    if (ref.current) {
+      const field = ref.current.getBoundingClientRect()
+      dispatch(setStart({x: field.x, y: field.y}))
+    }
+  }, [ref.current])
 
   return (
     <div>
@@ -33,11 +45,13 @@ export const BattleField: FC<BattleFieldProps> = ({field}) => {
           <Line start={65}/>
         </div>
         <div
-          // onMouseMove={handlerMouseMove}
+          ref={ref}
+          onMouseMove={handlerMouseMove}
           onMouseDown={handlerMouseMove}
-          className={!field.isEnemy ? st.myField : ''}>
-          <Sea field={field}/>
-          {!field.isEnemy && <Port />}
+          onMouseUp={handlerMouseUp}
+          className={st.myField }>
+          <Sea field={fieldMy} isEnemy={false}/>
+          <Port />
         </div>
       </div>
     </div>
