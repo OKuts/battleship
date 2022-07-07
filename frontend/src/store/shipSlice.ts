@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {initFlot} from "../utils/initFlot";
-import {IInitialState, Place} from "./types/ship";
+import {Direction, IInitialState, Place} from "./types/ship";
 
 
 const initialState: IInitialState = {
@@ -28,11 +28,17 @@ export const shipsSlice = createSlice({
         state.flot[state.selectedShip].x = action.payload.x
         state.flot[state.selectedShip].y = action.payload.y
       }
+    },
+
+    changeShipDirection(state) {
+      if (state.selectedShip !== null) {
+        state.flot[state.selectedShip].direction = Direction.ROW ? Direction.COLUNN : Direction.ROW
+      }
     }
   },
 })
 
 export const {
-  setCurrentShip, removeCurrentShip, changePositionSelectedShip
+  setCurrentShip, removeCurrentShip, changePositionSelectedShip, changeShipDirection
 } = shipsSlice.actions
 export default shipsSlice.reducer

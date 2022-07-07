@@ -1,4 +1,4 @@
-import {MouseEvent, useEffect, useRef} from 'react'
+import {MouseEvent, useEffect, useRef, useState} from 'react'
 import st from './BattleField.module.scss'
 import {FC} from 'react'
 import {Line} from "./Line";
@@ -7,7 +7,7 @@ import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import {changePositionSelectedShip, removeCurrentShip} from "../../store/shipSlice";
-import {setStart} from "../../store/fieldSlice";
+import {setOverCell, setStart} from "../../store/fieldSlice";
 
 export const BattleField: FC = () => {
   const dispatch = useDispatch()
@@ -19,11 +19,14 @@ export const BattleField: FC = () => {
     if (selectedShip !== null) {
       const x = e.clientX - start.x - 15
       const y = e.clientY - start.y - 15
+      const cellX = Math.round(x/30)
+      const cellY = Math.round(y/30)
+      dispatch(setOverCell({x: cellX, y: cellY}))
       dispatch(changePositionSelectedShip({x, y}))
     }
   }
 
-  const handlerMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+  const handlerMouseUp = () => {
     dispatch(removeCurrentShip())
   }
 

@@ -4,6 +4,7 @@ import st from './Ship.module.scss'
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {ShipPart} from "./ShipPart";
 import {changePositionSelectedShip, setCurrentShip} from "../../store/shipSlice";
+import {setIsCtrlPressed} from "../../store/ctrlSlice";
 
 type ShipType = {
   ship: IShip
@@ -13,6 +14,7 @@ export const Ship: FC<ShipType> = ({ship}) => {
   const dispatch = useAppDispatch()
   const {selectedShip} = useAppSelector(state => state.flot)
   const {start} = useAppSelector(state => state.field)
+  const  { isCtrlPressed } = useAppSelector(state => state.ctrl)
 
   const handlerMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     dispatch(setCurrentShip(Number(e.currentTarget.id)))
@@ -25,7 +27,7 @@ export const Ship: FC<ShipType> = ({ship}) => {
     onMouseDown={handlerMouseDown}
     id={`${ship.id}`}
     style={{top: ship.y, left: ship.x}}
-    className={selectedShip === ship.id ? st.moveShip : st.ship}
+    className={selectedShip === ship.id ? isCtrlPressed ? st.moveV: st.moveH : st.ship}
   >
     {Array(ship.size).fill('').map((_, i) =>
       <ShipPart key={i} id={i}/>)}

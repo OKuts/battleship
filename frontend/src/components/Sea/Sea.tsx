@@ -11,13 +11,13 @@ type SeaProps = {
 
 export const Sea: FC<SeaProps> = ({field, isEnemy}) => {
 
-
-  return <table className={st.table}>
+  return <table
+    className={st.table}>
     <tbody>
     {
       field.arr.map((line, y) => {
         return <tr key={y}>
-          {line.map((cell, x) =>
+          {line.map(cell =>
             isEnemy
               ? <CellEnemy key={cell.id} cell={cell}/>
               : <CellMy key={cell.id} cell={cell}/>

@@ -9,12 +9,16 @@
     width: 30px;
     height: 30px;
   }
-  
+
   border-collapse: collapse;
 }
 
 .cellMark {
   background-color: palegreen;
+}
+
+.overCell {
+  background-color: cornflowerblue;
 }
 
 

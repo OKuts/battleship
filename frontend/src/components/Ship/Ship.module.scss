@@ -10,10 +10,15 @@
     background-color: aquamarine;
 }
 
-.moveShip {
+.moveH {
     composes: ship;
     position: absolute;
     margin: 0;
+}
+
+.moveV {
+    composes: moveH;
+    display: block;
 }
 
 .currentShip {
