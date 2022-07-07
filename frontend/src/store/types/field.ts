@@ -13,7 +13,7 @@ export interface IFieldType {
 export interface IFieldState {
   fieldMy: IFieldType
   fieldEnemy: IFieldType
-  start: {
+  delta: {
     x: number
     y: number
   }

@@ -7,18 +7,18 @@ import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import {changePositionSelectedShip, removeCurrentShip} from "../../store/shipSlice";
-import {setOverCell, setStart} from "../../store/fieldSlice";
+import {setOverCell, setDelta} from "../../store/fieldSlice";
 
 export const BattleField: FC = () => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null)
-  const {selectedShip} = useAppSelector(state => state.flot)
-  const  { fieldMy, start } = useAppSelector(state => state.field)
+  const {selectedShip, flot} = useAppSelector(state => state.flot)
+  const  { fieldMy, delta, overCell } = useAppSelector(state => state.field)
 
   const handlerMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (selectedShip !== null) {
-      const x = e.clientX - start.x - 15
-      const y = e.clientY - start.y - 15
+      const x = e.clientX - delta.x - 15
+      const y = e.clientY - delta.y - 15
       const cellX = Math.round(x/30)
       const cellY = Math.round(y/30)
       dispatch(setOverCell({x: cellX, y: cellY}))
@@ -27,13 +27,19 @@ export const BattleField: FC = () => {
   }
 
   const handlerMouseUp = () => {
+    console.log('selectedShip', selectedShip)
+    console.log('overCell', overCell)
+    console.log('fieldMy', fieldMy.arr[overCell.y][overCell.x])
+    if (selectedShip !== null) console.log('ship', flot[selectedShip])
+
     dispatch(removeCurrentShip())
+    dispatch(setOverCell({x: -5, y: -5}))
   }
 
   useEffect(()=>{
     if (ref.current) {
       const field = ref.current.getBoundingClientRect()
-      dispatch(setStart({x: field.x, y: field.y}))
+      dispatch(setDelta({x: field.x, y: field.y}))
     }
   }, [ref.current])
 
@@ -50,7 +56,6 @@ export const BattleField: FC = () => {
         <div
           ref={ref}
           onMouseMove={handlerMouseMove}
-          onMouseDown={handlerMouseMove}
           onMouseUp={handlerMouseUp}
           className={st.myField }>
           <Sea field={fieldMy} isEnemy={false}/>

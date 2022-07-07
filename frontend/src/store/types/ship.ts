@@ -1,6 +1,6 @@
 export enum Direction {
     ROW,
-    COLUNN,
+    COLUMN,
 }
 
 export enum Place {
