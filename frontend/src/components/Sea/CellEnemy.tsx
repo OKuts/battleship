@@ -13,8 +13,8 @@ export const CellEnemy: FC<CellProps> = ({cell}) => {
 
   return (
     <td
-      onClick={() => dispatch(selectEnemyCell(cell.id))}
-      id={`${cell.id}`}
+      onClick={() => dispatch(selectEnemyCell(cell.idCell))}
+      id={`${cell.idCell}`}
       className={cell.isUse ? st.cellMark : ''}
     >
     </td>

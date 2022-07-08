@@ -17,7 +17,7 @@ export const BattleFieldEnemy: FC = () => {
           <Line start={65}/>
         </div>
         <div>
-          <Sea field={fieldEnemy} isEnemy={true}/>
+          <Sea isEnemy={true}/>
         </div>
       </div>
     </div>

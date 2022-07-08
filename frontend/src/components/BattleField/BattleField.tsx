@@ -57,7 +57,7 @@ export const BattleField: FC = () => {
           onMouseMove={handlerMouseMove}
           onMouseUp={handlerMouseUp}
           className={st.myField }>
-          <Sea field={fieldMy} isEnemy={false}/>
+          <Sea isEnemy={false}/>
           <Port />
         </div>
       </div>

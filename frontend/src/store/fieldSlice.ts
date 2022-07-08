@@ -44,10 +44,9 @@ export const fieldSlice = createSlice({
       const start = isCtrlPressed ? y : x
       for (let i = start; i < start + ship.size; i++) {
         isCtrlPressed
-          ? state.fieldMy.arr[i][x].idShip = `${ship.id}`
-          : state.fieldMy.arr[y][i].idShip = `${ship.id}`
+          ? state.fieldMy.arr[i][x].idShip = `${ship.id}${i-start}`
+          : state.fieldMy.arr[y][i].idShip = `${ship.id}${i-start}`
       }
-      state.fieldMy.arr[y][x].idShip = `${ship.id}`
     }
   },
 })
