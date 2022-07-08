@@ -1,19 +1,19 @@
-import {MouseEvent, useEffect, useRef, useState} from 'react'
+import {FC, MouseEvent, useEffect, useRef} from 'react'
 import st from './BattleField.module.scss'
-import {FC} from 'react'
 import {Line} from "./Line";
 import {Sea} from "../Sea/Sea";
 import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../hooks/useAppDispatch";
-import {changePositionSelectedShip, removeCurrentShip} from "../../store/shipSlice";
-import {setOverCell, setDelta} from "../../store/fieldSlice";
+import {changePositionSelectedShip, changeShipDirection, removeCurrentShip} from "../../store/shipSlice";
+import {setOverCell, setDelta, placeShip} from "../../store/fieldSlice";
 
 export const BattleField: FC = () => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null)
   const {selectedShip, flot} = useAppSelector(state => state.flot)
-  const  { fieldMy, delta, overCell } = useAppSelector(state => state.field)
+  const  { fieldMy, delta } = useAppSelector(state => state.field)
+  const { isCtrlPressed } = useAppSelector(state => state.ctrl)
 
   const handlerMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (selectedShip !== null) {
@@ -27,11 +27,10 @@ export const BattleField: FC = () => {
   }
 
   const handlerMouseUp = () => {
-    console.log('selectedShip', selectedShip)
-    console.log('overCell', overCell)
-    console.log('fieldMy', fieldMy.arr[overCell.y][overCell.x])
-    if (selectedShip !== null) console.log('ship', flot[selectedShip])
-
+    dispatch(changeShipDirection(isCtrlPressed))
+    if (selectedShip !== null) {
+      dispatch(placeShip({ship: flot[selectedShip], isCtrlPressed} ))
+    }
     dispatch(removeCurrentShip())
     dispatch(setOverCell({x: -5, y: -5}))
   }

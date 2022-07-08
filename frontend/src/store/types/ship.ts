@@ -1,25 +1,25 @@
 export enum Direction {
-    ROW,
-    COLUMN,
+  ROW,
+  COLUMN,
 }
 
 export enum Place {
-    SEA,
-    PORT,
-  }
+  SEA,
+  PORT,
+}
 
 export interface IShip {
-    id: number
-    direction: Direction
-    size: number
-    wounds: boolean[]
-    killed: boolean
-    place: Place
-    x: number
-    y: number
+  id: number
+  direction: Direction
+  size: number
+  wounds: boolean[]
+  killed: boolean
+  place: Place
+  x: number
+  y: number
 }
 
 export interface IInitialState {
-    flot: IShip[],
-    selectedShip: null | number
+  flot: IShip[],
+  selectedShip: null | number
 }

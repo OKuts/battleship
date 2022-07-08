@@ -23,11 +23,13 @@ export const CellMy: FC<CellProps> = ({cell}) => {
   const {selectedShip, flot} = useAppSelector(state => state.flot)
   let isMarkCell = false
   if (selectedShip !== null) {
-    isMarkCell = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed).includes(cell.id)
+    isMarkCell = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed).includes(cell.idCell)
   }
 
   return <td
     className={isMarkCell ? st.overCell : ''}
-    id={`${cell.id}`}
-  ></td>
+    id={`${cell.idCell}`}
+  >
+    {cell.idShip}
+  </td>
 }

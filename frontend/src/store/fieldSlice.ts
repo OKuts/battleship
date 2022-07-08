@@ -27,18 +27,32 @@ export const fieldSlice = createSlice({
     },
 
     setDelta (state, action) {
-      state.delta.x = action.payload.x
-      state.delta.y = action.payload.y
+      const {x, y} = action.payload
+      state.delta.x = x
+      state.delta.y = y
     },
 
     setOverCell (state, action) {
-      state.overCell.x = action.payload.x
-      state.overCell.y = action.payload.y
+      const {x, y} = action.payload
+      state.overCell.x = x
+      state.overCell.y = y
     },
+
+    placeShip (state, action) {
+      const { x, y } = state.overCell
+      const { ship, isCtrlPressed } = action.payload
+      const start = isCtrlPressed ? y : x
+      for (let i = start; i < start + ship.size; i++) {
+        isCtrlPressed
+          ? state.fieldMy.arr[i][x].idShip = `${ship.id}`
+          : state.fieldMy.arr[y][i].idShip = `${ship.id}`
+      }
+      state.fieldMy.arr[y][x].idShip = `${ship.id}`
+    }
   },
 })
 
 export const {
-  selectMyCell, selectEnemyCell, updateFields, setDelta, setOverCell
+  selectMyCell, selectEnemyCell, updateFields, setDelta, setOverCell, placeShip
 } = fieldSlice.actions
 export default fieldSlice.reducer

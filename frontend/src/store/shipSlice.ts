@@ -30,9 +30,9 @@ export const shipsSlice = createSlice({
       }
     },
 
-    changeShipDirection(state) {
+    changeShipDirection(state, action: PayloadAction<boolean>) {
       if (state.selectedShip !== null) {
-        state.flot[state.selectedShip].direction = Direction.ROW ? Direction.COLUMN : Direction.ROW
+        state.flot[state.selectedShip].direction = action.payload ? Direction.COLUMN : Direction.ROW
       }
     }
   },

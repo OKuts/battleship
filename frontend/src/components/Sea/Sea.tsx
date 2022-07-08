@@ -19,8 +19,8 @@ export const Sea: FC<SeaProps> = ({field, isEnemy}) => {
         return <tr key={y}>
           {line.map(cell =>
             isEnemy
-              ? <CellEnemy key={cell.id} cell={cell}/>
-              : <CellMy key={cell.id} cell={cell}/>
+              ? <CellEnemy key={cell.idCell} cell={cell}/>
+              : <CellMy key={cell.idCell} cell={cell}/>
           )}
         </tr>
       })

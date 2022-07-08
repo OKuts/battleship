@@ -3,7 +3,8 @@ export interface ICell {
   y: number
   isUse: boolean
   isEmpty: boolean
-  id: string
+  idCell: string
+  idShip: string
 }
 
 export interface IFieldType {
