@@ -6,7 +6,7 @@ const initialState: IFieldState = {
   fieldMy: initField(false),
   fieldEnemy: initField(true),
   delta: {x: 0, y: 0},
-  overCell: {x: -5, y: -5}
+  overCell: {x: 0, y: -1}
 }
 
 export const fieldSlice = createSlice({

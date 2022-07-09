@@ -8,7 +8,7 @@ const initShip = (n: number, i: number): IShip => {
         size: n,
         wounds: Array(n).fill(false),
         place: Place.PORT,
-        x: -1,
+        x: 0,
         y: -1,
     }
 }
