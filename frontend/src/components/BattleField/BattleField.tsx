@@ -5,8 +5,8 @@ import {Sea} from "../Sea/Sea";
 import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../hooks/useAppDispatch";
-import {changePositionSelectedShip, changeShipDirection, removeCurrentShip} from "../../store/shipSlice";
-import {setOverCell, setDelta, placeShip} from "../../store/fieldSlice";
+import {changePositionSelectedShip} from "../../store/shipSlice";
+import {setOverCell, setDelta} from "../../store/fieldSlice";
 import {isCoordinateIn} from "../../utils/isCoordinateIn";
 
 export const BattleField: FC = () => {
@@ -22,23 +22,10 @@ export const BattleField: FC = () => {
       const y = e.clientY - delta.y - 15
       const cellX = Math.round(x/30)
       const cellY = Math.round(y/30)
-      if (isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)) {
-        dispatch(setOverCell({x: cellX, y: cellY}))
-        dispatch(changePositionSelectedShip({x, y}))
-      } else {
-        dispatch(setOverCell({x: 0, y: -1}))
-        // dispatch(changePositionSelectedShip({x: 0, y: -1}))
-      }
+      const isXYIn = isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)
+      dispatch(setOverCell(isXYIn ? {x: cellX, y: cellY} : {x: null, y: null}))
+      dispatch(changePositionSelectedShip({x, y}))
     }
-  }
-
-  const handlerMouseUp = () => {
-    // dispatch(changeShipDirection(isCtrlPressed))
-    if (selectedShip !== null) {
-      dispatch(placeShip({ship: flot[selectedShip], isCtrlPressed} ))
-    }
-    dispatch(removeCurrentShip())
-    dispatch(setOverCell({x: 0, y: -1}))
   }
 
   useEffect(()=>{
@@ -61,7 +48,6 @@ export const BattleField: FC = () => {
         <div
           ref={ref}
           onMouseMove={handlerMouseMove}
-          onMouseUp={handlerMouseUp}
           className={st.myField }>
           <Sea isEnemy={false}/>
           <Port />

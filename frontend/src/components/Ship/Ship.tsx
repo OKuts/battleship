@@ -3,7 +3,7 @@ import {IShip} from "../../store/types/ship"
 import st from './Ship.module.scss'
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {ShipPart} from "./ShipPart";
-import {changePositionSelectedShip, setCurrentShip} from "../../store/shipSlice";
+import {changePositionSelectedShip, setSelectedShip} from "../../store/shipSlice";
 
 type ShipType = {
   ship: IShip
@@ -16,7 +16,7 @@ export const Ship: FC<ShipType> = ({ship}) => {
   const  { isCtrlPressed } = useAppSelector(state => state.ctrl)
 
   const handlerMouseDown = (e: MouseEvent<HTMLDivElement>) => {
-    dispatch(setCurrentShip(Number(e.currentTarget.id)))
+    dispatch(setSelectedShip(Number(e.currentTarget.id)))
     const x = e.pageX - delta.x - 15
     const y = e.pageY - delta.y - 15
     dispatch(changePositionSelectedShip({x, y}))

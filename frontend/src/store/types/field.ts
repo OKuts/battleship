@@ -19,7 +19,7 @@ export interface IFieldState {
     y: number
   }
   overCell: {
-    x: number
-    y: number
+    x: number | null
+    y: number | null
   }
 }

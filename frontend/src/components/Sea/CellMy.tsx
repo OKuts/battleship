@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import {ICell, IFieldType} from "../../store/types/field";
+import {ICell} from "../../store/types/field";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import st from './Sea.module.scss'
 import {isTryPlace} from "../../utils/isTryPlace";
@@ -15,7 +15,7 @@ export const CellMy: FC<CellProps> = ({cell}) => {
   const {selectedShip, flot} = useAppSelector(state => state.flot)
 
   let isMarkCell = false
-  if (selectedShip !== null) {
+  if (selectedShip !== null && overCell.x !== null && overCell.y !== null) {
     const shipPlaceArr = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed)
     if (isTryPlace(shipPlaceArr, fieldMy))
       isMarkCell = shipPlaceArr.length ? shipPlaceArr.includes(cell.idCell) : false

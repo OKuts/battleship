@@ -19,16 +19,8 @@ export interface IShip {
   y: number
 }
 
-
-
 export interface IInitialState {
   flot: IShip[],
   selectedShip: null | number
 }
 
-export interface ISelectionShip {
-  id: number | null
-  x: number | null
-  y: number | null
-  direction: Direction
-}

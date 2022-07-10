@@ -6,7 +6,7 @@ const initialState: IFieldState = {
   fieldMy: initField(false),
   fieldEnemy: initField(true),
   delta: {x: 0, y: 0},
-  overCell: {x: 0, y: -1}
+  overCell: {x: null, y: null}
 }
 
 export const fieldSlice = createSlice({
@@ -40,12 +40,14 @@ export const fieldSlice = createSlice({
 
     placeShip (state, action) {
       const { x, y } = state.overCell
-      const { ship, isCtrlPressed } = action.payload
-      const start = isCtrlPressed ? y : x
-      for (let i = start; i < start + ship.size; i++) {
-        isCtrlPressed
-          ? state.fieldMy.arr[i][x].idShip = `${ship.id}${i-start}`
-          : state.fieldMy.arr[y][i].idShip = `${ship.id}${i-start}`
+      if ( x!== null && y !== null) {
+        const { ship, isCtrlPressed } = action.payload
+        const start = isCtrlPressed ? y : x
+        for (let i = start; i < start + ship.size; i++) {
+          isCtrlPressed
+            ? state.fieldMy.arr[i][x].idShip = `${ship.id}${i-start}`
+            : state.fieldMy.arr[y][i].idShip = `${ship.id}${i-start}`
+        }
       }
     }
   },
