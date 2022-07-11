@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, memo} from 'react'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import st from './Button.module.scss'
 
@@ -7,7 +7,7 @@ type ButtonProps = {
     func?: any[] | null
 }
 
-export const Button:FC<ButtonProps> = ({text, func = null}) => {
+export const Button:FC<ButtonProps> = memo(({text, func = null}) => {
     const dispatch = useAppDispatch()
 
     const handlerClick = () => {
@@ -19,4 +19,4 @@ export const Button:FC<ButtonProps> = ({text, func = null}) => {
             onClick = {handlerClick}
             className={st.button}>{text}</button>
     )
-}
+})

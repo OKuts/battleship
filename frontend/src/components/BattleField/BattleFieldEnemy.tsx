@@ -1,9 +1,9 @@
-import {FC} from 'react'
+import {FC, memo} from 'react'
 import st from './BattleField.module.scss'
 
 import {Line, Sea} from ".."
 
-export const BattleFieldEnemy: FC = () => {
+export const BattleFieldEnemy: FC = memo(() => {
 
   return (
     <div>
@@ -21,4 +21,4 @@ export const BattleFieldEnemy: FC = () => {
       </div>
     </div>
   )
-}
+})

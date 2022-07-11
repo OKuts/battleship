@@ -6,6 +6,7 @@ interface LineProps {
 }
 
 export const Line:FC <LineProps> = ({start}) => {
+  console.log('line')
   return (
     <>
       {[...Array(10).keys()].map(n =>

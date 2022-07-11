@@ -1,4 +1,4 @@
-import {FC, MouseEvent, useEffect, useRef} from 'react'
+import {FC, MouseEvent, useEffect, useRef, memo} from 'react'
 import {useDispatch} from "react-redux";
 
 import st from './BattleField.module.scss'
@@ -9,7 +9,7 @@ import {useAppSelector} from "../../hooks/useAppDispatch"
 import {changePositionSelectedShip, setCoordinates} from "../../store"
 import {isCoordinateIn, getCoordinates} from "../../utils"
 
-export const BattleField: FC = () => {
+export const BattleField: FC = memo(() => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null)
   const {selectedShip, flot} = useAppSelector(state => state.flot)
@@ -41,13 +41,10 @@ export const BattleField: FC = () => {
     }
   }, [client])
 
-  console.log('rerender')
-
   return (
     <div>
       <div className={st.numberLine}>
         <div className={st.cell}></div>
-        {console.log(client)}
         <Line start={48}/>
       </div>
       <div className={st.letterField}>
@@ -64,4 +61,4 @@ export const BattleField: FC = () => {
       </div>
     </div>
   )
-}
+})
