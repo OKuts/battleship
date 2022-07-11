@@ -1,13 +1,9 @@
 import st from './App.module.scss'
 import {FC, useEffect} from 'react'
-import {BattleField} from '../BattleField/BattleField'
+import {BattleField, BattleFieldEnemy} from '..'
 import {Button} from '../../elements/Button/Button';
-import {updateFields} from '../../store/fieldSlice';
-import {BattleFieldEnemy} from "../BattleField/BattleFieldEnemy";
+import {updateFields, setIsCtrlPressed, setIsMouseLeftPress, updateFlot} from '../../store';
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {setIsCtrlPressed} from "../../store/ctrlSlice";
-import {setIsMouseLeftPress} from "../../store/mouseSlice";
-import {updateFlot} from "../../store/shipSlice";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()

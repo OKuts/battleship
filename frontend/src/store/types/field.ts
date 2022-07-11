@@ -27,3 +27,9 @@ export interface IFieldState {
     y: number | null
   }
 }
+
+export interface ISetCoordinates {
+  name: string,
+  x: number | null,
+  y: number | null
+}

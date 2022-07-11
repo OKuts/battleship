@@ -2,8 +2,7 @@ import {FC} from 'react'
 import {ICell} from "../../store/types/field";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import st from './Sea.module.scss'
-import {isTryPlace} from "../../utils/isTryPlace";
-import {getArrId} from "../../utils/getArrId";
+import {isTryPlace, getArrId} from "../../utils";
 
 interface CellProps {
   cell: ICell

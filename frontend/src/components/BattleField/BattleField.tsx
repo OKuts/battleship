@@ -1,13 +1,13 @@
 import {FC, MouseEvent, useEffect, useRef} from 'react'
-import st from './BattleField.module.scss'
-import {Line} from "./Line";
-import {Sea} from "../Sea/Sea";
-import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../hooks/useAppDispatch";
-import {changePositionSelectedShip} from "../../store/shipSlice";
-import {setOverCell, setDelta, setClient} from "../../store/fieldSlice";
-import {isCoordinateIn, getCoordinates} from "../../utils";
+
+import st from './BattleField.module.scss'
+
+import {Sea, Port, Line} from ".."
+
+import {useAppSelector} from "../../hooks/useAppDispatch"
+import {changePositionSelectedShip, setCoordinates} from "../../store"
+import {isCoordinateIn, getCoordinates} from "../../utils"
 
 export const BattleField: FC = () => {
   const dispatch = useDispatch()
@@ -17,13 +17,13 @@ export const BattleField: FC = () => {
   const { isCtrlPressed } = useAppSelector(state => state.ctrl)
 
   const handlerMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    dispatch(setClient({x: e.clientX, y: e.clientY}))
+    dispatch(setCoordinates({name: 'client', x: e.clientX, y: e.clientY}))
   }
 
   useEffect(()=>{
     if (ref.current) {
       const field = ref.current.getBoundingClientRect()
-      dispatch(setDelta({x: field.x, y: field.y}))
+      dispatch(setCoordinates({name: 'delta', x: field.x, y: field.y}))
     }
   }, [ref.current])
 
@@ -33,16 +33,21 @@ export const BattleField: FC = () => {
       const {x, y, cellX, cellY} = getCoordinates(client, delta)
       if (overCell.x !== cellX || overCell.y !== cellY) {
         const isXYIn = isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)
-        dispatch(setOverCell(isXYIn ? {x: cellX, y: cellY} : {x: null, y: null}))
+        dispatch(setCoordinates(isXYIn
+          ? {name: 'overCell', x: cellX, y: cellY}
+          : {name: 'overCell', x: null, y: null}))
       }
       dispatch(changePositionSelectedShip({x, y}))
     }
   }, [client])
 
+  console.log('rerender')
+
   return (
     <div>
       <div className={st.numberLine}>
         <div className={st.cell}></div>
+        {console.log(client)}
         <Line start={48}/>
       </div>
       <div className={st.letterField}>

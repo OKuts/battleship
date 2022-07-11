@@ -1,11 +1,10 @@
-import st from './BattleField.module.scss'
 import {FC} from 'react'
-import {Line} from "./Line";
-import {Sea} from "../Sea/Sea";
-import {useAppSelector} from "../../hooks/useAppDispatch";
+import st from './BattleField.module.scss'
+
+import {Line, Sea} from ".."
 
 export const BattleFieldEnemy: FC = () => {
-  const  { fieldEnemy } = useAppSelector(state => state.field)
+
   return (
     <div>
       <div className={st.numberLine}>

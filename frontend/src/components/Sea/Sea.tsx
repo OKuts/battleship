@@ -1,6 +1,5 @@
 import {FC} from 'react'
-import {CellMy} from "./CellMy";
-import {CellEnemy} from "./CellEnemy";
+import {CellMy, CellEnemy} from "..";
 import st from './Sea.module.scss'
 import { useAppSelector } from '../../hooks/useAppDispatch';
 

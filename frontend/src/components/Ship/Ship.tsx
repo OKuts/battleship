@@ -2,17 +2,18 @@ import {FC, MouseEvent, useEffect} from "react"
 import {IShip} from "../../store/types/ship"
 import st from './Ship.module.scss'
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
-import {ShipPart} from "./ShipPart";
-import {backSelectedShip, changePositionSelectedShip, removeSelectedShip, setSelectedShip} from "../../store/shipSlice";
-import {setIsMouseLeftPress} from "../../store/mouseSlice";
-import {placeShip, setOverCell} from "../../store/fieldSlice";
-import {getArrId, isCoordinateIn, isTryPlace} from "../../utils";
+import {ShipPart} from "..";
+import {
+  backSelectedShip, changePositionSelectedShip, removeSelectedShip,
+  setSelectedShip, setIsMouseLeftPress, placeShip, setCoordinates
+} from "../../store";
+import {getArrId, getCoordinates, isCoordinateIn, isTryPlace} from "../../utils";
 
-type ShipType = {
+type ShipTypeProps = {
   ship: IShip
 }
 
-export const Ship: FC<ShipType> = ({ship}) => {
+export const Ship: FC<ShipTypeProps> = ({ship}) => {
   const dispatch = useAppDispatch()
   const {selectedShip, flot} = useAppSelector(state => state.flot)
   const {delta, overCell, fieldMy, client} = useAppSelector(state => state.field)
@@ -42,7 +43,7 @@ export const Ship: FC<ShipType> = ({ship}) => {
           dispatch(removeSelectedShip())
         }
       } else {
-        dispatch(setOverCell({x: null, y: null}))
+        dispatch(setCoordinates({name: 'overCell', x: null, y: null}))
         dispatch(backSelectedShip())
       }
     }
@@ -52,7 +53,7 @@ export const Ship: FC<ShipType> = ({ship}) => {
     if (overCell.y !== null && overCell.x !== null && selectedShip !== null) {
       const isXYIn = isCoordinateIn(overCell.y, overCell.x, isCtrlPressed, flot[selectedShip].size)
       if (!isXYIn) {
-        dispatch(setOverCell({x: null, y: null}))
+        dispatch(setCoordinates({name: 'overCell', x: null, y: null}))
       }
     } else {
       if (selectedShip !== null){
@@ -60,7 +61,9 @@ export const Ship: FC<ShipType> = ({ship}) => {
         const {cellX, cellY} = getCoordinates(client, delta)
         if (overCell.x !== cellX || overCell.y !== cellY) {
           const isXYIn = isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)
-          dispatch(setOverCell(isXYIn ? {x: cellX, y: cellY} : {x: null, y: null}))
+          dispatch(setCoordinates(isXYIn
+            ? {name: 'overCell', x: cellX, y: cellY}
+            : {name: 'overCell', x: null, y: null}))
         }
       }
     }
@@ -76,3 +79,24 @@ export const Ship: FC<ShipType> = ({ship}) => {
       <ShipPart key={i} id={i}/>)}
   </div>
 }
+
+// useEffect(() => {
+//   if (!isMouseLeftPress) {
+//     let isXYIn = false
+//     if (overCell.y !== null && overCell.x !== null && selectedShip !== null) {
+//       isXYIn = isCoordinateIn(overCell.y, overCell.x, isCtrlPressed, flot[selectedShip].size)
+//     }
+//     if (isXYIn) {
+//       if (selectedShip !== null && overCell.x !== null && overCell.y !== null) {
+//         const shipPlaceArr = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed)
+//         if (isTryPlace(shipPlaceArr, fieldMy)) {
+//           dispatch(placeShip({ship: flot[selectedShip], isCtrlPressed}))
+//         } else dispatch(backSelectedShip())
+//         dispatch(removeSelectedShip())
+//       }
+//     } else {
+//       dispatch(setOverCell({x: null, y: null}))
+//       dispatch(backSelectedShip())
+//     }
+//   }
+// }, [isMouseLeftPress])

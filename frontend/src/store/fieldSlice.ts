@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IFieldState} from "./types/field";
+import {IFieldState, ISetCoordinates} from "./types/field";
 import {initField} from "../utils";
 
 const initialState: IFieldState = {
@@ -28,22 +28,12 @@ export const fieldSlice = createSlice({
       state.fieldMy = initialState.fieldMy
     },
 
-    setDelta (state, action) {
-      const {x, y} = action.payload
-      state.delta.x = x
-      state.delta.y = y
-    },
-
-    setOverCell (state, action) {
-      const {x, y} = action.payload
-      state.overCell.x = x
-      state.overCell.y = y
-    },
-
-    setClient (state, action) {
-      const {x, y} = action.payload
-      state.client.x = x
-      state.client.y = y
+    setCoordinates(state, action: PayloadAction<ISetCoordinates>) {
+      const {name, x, y} = action.payload
+      // @ts-ignore
+      state[name].x = x
+      // @ts-ignore
+      state[name].y = y
     },
 
     placeShip (state, action) {
@@ -62,6 +52,6 @@ export const fieldSlice = createSlice({
 })
 
 export const {
-  selectMyCell, selectEnemyCell, updateFields, setDelta, setOverCell, placeShip, setClient
+  selectMyCell, selectEnemyCell, updateFields, placeShip, setCoordinates
 } = fieldSlice.actions
 export default fieldSlice.reducer

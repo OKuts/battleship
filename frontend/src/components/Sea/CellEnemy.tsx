@@ -1,7 +1,7 @@
 import st from './Sea.module.scss'
 import {FC} from 'react'
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {selectMyCell, selectEnemyCell} from "../../store/fieldSlice";
+import {selectEnemyCell} from "../../store";
 import {ICell} from "../../store/types/field";
 
 interface CellProps {

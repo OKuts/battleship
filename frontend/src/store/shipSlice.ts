@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {initFlot} from "../utils/initFlot";
-import {Direction, IInitialState, Place} from "./types/ship";
+import {initFlot} from "../utils";
+import { IInitialState, Place} from "./types/ship";
 
 
 const initialState: IInitialState = {
