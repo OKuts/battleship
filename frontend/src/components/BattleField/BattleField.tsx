@@ -6,26 +6,18 @@ import { Port } from '../Port/Port';
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../hooks/useAppDispatch";
 import {changePositionSelectedShip} from "../../store/shipSlice";
-import {setOverCell, setDelta} from "../../store/fieldSlice";
-import {isCoordinateIn} from "../../utils/isCoordinateIn";
+import {setOverCell, setDelta, setClient} from "../../store/fieldSlice";
+import {isCoordinateIn, getCoordinates} from "../../utils";
 
 export const BattleField: FC = () => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null)
   const {selectedShip, flot} = useAppSelector(state => state.flot)
-  const  { delta } = useAppSelector(state => state.field)
+  const  { delta, overCell, client } = useAppSelector(state => state.field)
   const { isCtrlPressed } = useAppSelector(state => state.ctrl)
 
   const handlerMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (selectedShip !== null) {
-      const x = e.clientX - delta.x - 15
-      const y = e.clientY - delta.y - 15
-      const cellX = Math.round(x/30)
-      const cellY = Math.round(y/30)
-      const isXYIn = isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)
-      dispatch(setOverCell(isXYIn ? {x: cellX, y: cellY} : {x: null, y: null}))
-      dispatch(changePositionSelectedShip({x, y}))
-    }
+    dispatch(setClient({x: e.clientX, y: e.clientY}))
   }
 
   useEffect(()=>{
@@ -34,6 +26,18 @@ export const BattleField: FC = () => {
       dispatch(setDelta({x: field.x, y: field.y}))
     }
   }, [ref.current])
+
+  useEffect(()=>{
+    if (selectedShip !== null && client.x !== null && client.y !== null) {
+      // @ts-ignore
+      const {x, y, cellX, cellY} = getCoordinates(client, delta)
+      if (overCell.x !== cellX || overCell.y !== cellY) {
+        const isXYIn = isCoordinateIn(cellY, cellX, isCtrlPressed, flot[selectedShip].size)
+        dispatch(setOverCell(isXYIn ? {x: cellX, y: cellY} : {x: null, y: null}))
+      }
+      dispatch(changePositionSelectedShip({x, y}))
+    }
+  }, [client])
 
   return (
     <div>

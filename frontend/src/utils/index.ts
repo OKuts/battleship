@@ -1,0 +1,6 @@
+export * from './getCoordinates'
+export * from './getArrId'
+export * from './initFlot'
+export * from './initField'
+export * from './isTryPlace'
+export * from './isCoordinateIn'

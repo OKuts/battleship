@@ -1,9 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = {
-  isLeftDown: false,
-  dX: 0,
-  dY: 0,
+  isMouseLeftPress: false,
 }
 
 export const mouseSlice = createSlice({
@@ -11,12 +9,11 @@ export const mouseSlice = createSlice({
   initialState,
 
   reducers: {
-    // setDxDy(state, action) {
-    //   state.dX = action.payload.x
-    //   state.dY = action.payload.y
-    // },
+    setIsMouseLeftPress(state, action: PayloadAction<boolean>) {
+      state.isMouseLeftPress = action.payload
+    },
   },
 })
 
-export const {  } = mouseSlice.actions
+export const { setIsMouseLeftPress } = mouseSlice.actions
 export default mouseSlice.reducer

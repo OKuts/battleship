@@ -18,6 +18,11 @@ export const shipsSlice = createSlice({
       state.selectedShip = action.payload
     },
 
+    updateFlot (state) {
+      state.flot = initialState.flot
+      state.selectedShip = null
+    },
+
     removeSelectedShip(state) {
       if (state.selectedShip !== null) state.flot[state.selectedShip].place = Place.SEA
       state.selectedShip = null
@@ -34,16 +39,10 @@ export const shipsSlice = createSlice({
         state.flot[state.selectedShip].y = action.payload.y
       }
     },
-
-    // changeShipDirection(state, action: PayloadAction<boolean>) {
-    //   if (state.selectedShip !== null) {
-    //     state.flot[state.selectedShip].direction = action.payload ? Direction.COLUMN : Direction.ROW
-    //   }
-    // }
   },
 })
 
 export const {
-  setSelectedShip, removeSelectedShip, changePositionSelectedShip, backSelectedShip
+  setSelectedShip, removeSelectedShip, changePositionSelectedShip, backSelectedShip, updateFlot
 } = shipsSlice.actions
 export default shipsSlice.reducer

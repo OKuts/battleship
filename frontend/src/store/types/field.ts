@@ -22,4 +22,8 @@ export interface IFieldState {
     x: number | null
     y: number | null
   }
+  client: {
+    x: number | null,
+    y: number | null
+  }
 }

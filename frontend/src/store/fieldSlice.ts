@@ -1,12 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IFieldState} from "./types/field";
-import {initField} from "../utils/initField";
+import {initField} from "../utils";
 
 const initialState: IFieldState = {
   fieldMy: initField(false),
   fieldEnemy: initField(true),
   delta: {x: 0, y: 0},
-  overCell: {x: null, y: null}
+  overCell: {x: null, y: null},
+  client: {x: null, y: null}
 }
 
 export const fieldSlice = createSlice({
@@ -24,6 +25,7 @@ export const fieldSlice = createSlice({
 
     updateFields(state) {
       state.fieldEnemy = initialState.fieldEnemy
+      state.fieldMy = initialState.fieldMy
     },
 
     setDelta (state, action) {
@@ -36,6 +38,12 @@ export const fieldSlice = createSlice({
       const {x, y} = action.payload
       state.overCell.x = x
       state.overCell.y = y
+    },
+
+    setClient (state, action) {
+      const {x, y} = action.payload
+      state.client.x = x
+      state.client.y = y
     },
 
     placeShip (state, action) {
@@ -54,6 +62,6 @@ export const fieldSlice = createSlice({
 })
 
 export const {
-  selectMyCell, selectEnemyCell, updateFields, setDelta, setOverCell, placeShip
+  selectMyCell, selectEnemyCell, updateFields, setDelta, setOverCell, placeShip, setClient
 } = fieldSlice.actions
 export default fieldSlice.reducer
