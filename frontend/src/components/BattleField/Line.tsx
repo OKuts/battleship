@@ -1,12 +1,11 @@
-import {FC} from "react";
+import {FC, memo} from "react";
 import st from "./BattleField.module.scss";
 
 interface LineProps {
   start: number
 }
 
-export const Line:FC <LineProps> = ({start}) => {
-  console.log('line')
+export const Line:FC <LineProps> = memo(({start}) => {
   return (
     <>
       {[...Array(10).keys()].map(n =>
@@ -16,4 +15,4 @@ export const Line:FC <LineProps> = ({start}) => {
       )}
     </>
   )
-}
+})

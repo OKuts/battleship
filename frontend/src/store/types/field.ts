@@ -2,7 +2,6 @@ export interface ICell {
   x: number
   y: number
   isUse: boolean
-  isEmpty: boolean
   idCell: string
   idShip: string
 }

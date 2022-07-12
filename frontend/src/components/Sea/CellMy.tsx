@@ -1,33 +1,24 @@
-import {FC} from 'react'
+import {FC, memo} from 'react'
 import {ICell} from "../../store/types/field";
-import {useAppSelector} from "../../hooks/useAppDispatch";
 import st from './Sea.module.scss'
-import {isTryPlace, getArrId} from "../../utils";
 
 interface CellProps {
   cell: ICell
+  isMarkCell: boolean
+  handlerMouseDown: (cell: ICell) => void
 }
 
-export const CellMy: FC<CellProps> = ({cell}) => {
-  const {isCtrlPressed} = useAppSelector(state => state.ctrl)
-  const {overCell, fieldMy} = useAppSelector(state => state.field)
-  const {selectedShip, flot} = useAppSelector(state => state.flot)
-
-  let isMarkCell = false
-  if (selectedShip !== null && overCell.x !== null && overCell.y !== null) {
-    const shipPlaceArr = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed)
-    if (isTryPlace(shipPlaceArr, fieldMy))
-      isMarkCell = shipPlaceArr.length ? shipPlaceArr.includes(cell.idCell) : false
-  }
+export const CellMy: FC<CellProps> = memo(({cell, isMarkCell, handlerMouseDown}) => {
 
   let cn = ''
   if (cell.idShip) cn = st.ship
   if (isMarkCell) cn = st.overCell
 
   return <td
+    onMouseDown={() => handlerMouseDown(cell)}
     className={cn}
     id={`${cell.idCell}`}
   >
     {cell.idShip}
   </td>
-}
+})

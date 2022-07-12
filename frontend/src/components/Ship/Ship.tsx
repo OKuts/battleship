@@ -79,24 +79,3 @@ export const Ship: FC<ShipTypeProps> = ({ship}) => {
       <ShipPart key={i} id={i}/>)}
   </div>
 }
-
-// useEffect(() => {
-//   if (!isMouseLeftPress) {
-//     let isXYIn = false
-//     if (overCell.y !== null && overCell.x !== null && selectedShip !== null) {
-//       isXYIn = isCoordinateIn(overCell.y, overCell.x, isCtrlPressed, flot[selectedShip].size)
-//     }
-//     if (isXYIn) {
-//       if (selectedShip !== null && overCell.x !== null && overCell.y !== null) {
-//         const shipPlaceArr = getArrId(overCell.x, overCell.y, flot[selectedShip], isCtrlPressed)
-//         if (isTryPlace(shipPlaceArr, fieldMy)) {
-//           dispatch(placeShip({ship: flot[selectedShip], isCtrlPressed}))
-//         } else dispatch(backSelectedShip())
-//         dispatch(removeSelectedShip())
-//       }
-//     } else {
-//       dispatch(setOverCell({x: null, y: null}))
-//       dispatch(backSelectedShip())
-//     }
-//   }
-// }, [isMouseLeftPress])

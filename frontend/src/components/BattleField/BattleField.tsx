@@ -56,7 +56,7 @@ export const BattleField: FC = memo(() => {
           onMouseMove={handlerMouseMove}
           className={st.myField }>
           <Sea isEnemy={false}/>
-          <Port />
+          <Port flot = {flot}/>
         </div>
       </div>
     </div>

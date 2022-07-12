@@ -4,7 +4,7 @@ import st from './BattleField.module.scss'
 import {Line, Sea} from ".."
 
 export const BattleFieldEnemy: FC = memo(() => {
-
+  console.log('BattleFieldEnemy')
   return (
     <div>
       <div className={st.numberLine}>

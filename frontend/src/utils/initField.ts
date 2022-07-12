@@ -5,7 +5,6 @@ export const initField = (enemy: boolean) => {
         x,
         y,
         isUse: false,
-        isEmpty: true,
         idCell: `${y}${x}`,
         idShip: ''
       }))),

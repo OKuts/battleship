@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IFieldState, ISetCoordinates} from "./types/field";
+import {ICell, IFieldState, ISetCoordinates} from "./types/field";
 import {initField} from "../utils";
 
 const initialState: IFieldState = {
@@ -15,8 +15,12 @@ export const fieldSlice = createSlice({
   initialState,
 
   reducers: {
-    selectMyCell(state, action: PayloadAction<string>) {
-      console.log(action.payload, ' My field')
+    cleanShip(state, action: PayloadAction<string>) {
+      const id = action.payload
+      state.fieldMy.arr = state.fieldMy.arr.map((line: ICell[]) =>
+        line.map((cell: ICell) => cell.idShip && cell.idShip[0] === id[0]
+          ? ({...cell, idShip: ''})
+          : cell))
     },
 
     selectEnemyCell(state, action: PayloadAction<string>) {
@@ -52,6 +56,6 @@ export const fieldSlice = createSlice({
 })
 
 export const {
-  selectMyCell, selectEnemyCell, updateFields, placeShip, setCoordinates
+  selectEnemyCell, updateFields, placeShip, setCoordinates, cleanShip
 } = fieldSlice.actions
 export default fieldSlice.reducer
