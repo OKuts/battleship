@@ -1,35 +1,16 @@
+import {FC} from 'react'
 import st from './App.module.scss'
-import {FC, useEffect} from 'react'
-import {BattleField, BattleFieldEnemy} from '..'
+
+import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
-import {updateFields, setIsCtrlPressed, setIsMouseLeftPress, updateFlot} from '../../store';
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {updateFields, updateFlot} from '../../store';
 
 export const App: FC = () => {
-  const dispatch = useAppDispatch()
-
-  const handlerCtrlDown = (e: KeyboardEvent) => {
-    if (e.ctrlKey) dispatch(setIsCtrlPressed(true))
-  }
-
-  const handlerCtrlUp = (e: KeyboardEvent) => {
-    if (!e.ctrlKey) dispatch(setIsCtrlPressed(false))
-  }
-
-  const handlerOnMouseUp = () => { dispatch(setIsMouseLeftPress(false))}
-
-  useEffect(() => {
-    window.addEventListener('keydown', handlerCtrlDown)
-    window.addEventListener('keyup', handlerCtrlUp)
-    return
-  }, [])
-
   return (
     <div
-      onMouseUp={handlerOnMouseUp}
       className={st.app}>
       <div className={st.field}>
-        <BattleField/>
+        <BattleField isEnemy={false}/>
       </div>
       <div className={st.buttons}>
         <Button text='Button1'/>
@@ -37,7 +18,7 @@ export const App: FC = () => {
         <Button text='Reset' func={[updateFields, updateFlot]}/>
       </div>
       <div className={st.field}>
-        <BattleFieldEnemy/>
+        <BattleField isEnemy/>
       </div>
     </div>
   )

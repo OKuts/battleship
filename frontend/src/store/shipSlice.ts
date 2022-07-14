@@ -1,11 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {initFlot} from "../utils";
-import { IInitialState, Place} from "./types/ship";
+import {IInitialFlot} from "./types/ship";
 
 
-const initialState: IInitialState = {
+
+const initialState: IInitialFlot = {
   flot: initFlot(),
-  selectedShip: null
+  selectedShip: null,
+  isReady: false
 }
 
 export const shipsSlice = createSlice({
@@ -15,29 +17,19 @@ export const shipsSlice = createSlice({
   reducers: {
 
     setSelectedShip(state, action: PayloadAction<number>) {
-      state.selectedShip = action.payload
     },
 
     updateFlot (state) {
       state.flot = initialState.flot
-      state.selectedShip = null
     },
 
     removeSelectedShip(state) {
-      if (state.selectedShip !== null) state.flot[state.selectedShip].place = Place.SEA
-      state.selectedShip = null
     },
 
     backSelectedShip(state) {
-      if (state.selectedShip !== null) state.flot[state.selectedShip].place = Place.PORT
-      state.selectedShip = null
     },
 
     changePositionSelectedShip(state, action) {
-      if (state.selectedShip !== null) {
-        state.flot[state.selectedShip].x = action.payload.x
-        state.flot[state.selectedShip].y = action.payload.y
-      }
     },
   },
 })

@@ -3,24 +3,20 @@ export enum Direction {
   COLUMN,
 }
 
-export enum Place {
-  SEA,
-  PORT,
-}
-
 export interface IShip {
   id: number
   direction: Direction
   size: number
   wounds: boolean[]
-  killed: boolean
-  place: Place
   x: number
   y: number
 }
 
-export interface IInitialState {
+export interface ISelectedShip extends Omit <IShip, 'wounds'>{}
+
+export interface IInitialFlot {
   flot: IShip[],
-  selectedShip: null | number
+  selectedShip: ISelectedShip | null
+  isReady: boolean
 }
 
