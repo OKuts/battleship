@@ -1,6 +1,6 @@
 export * from './App/App'
 export * from './BattleField/BattleField'
-export * from './BattleField/BattleFieldEnemy'
+export * from './BattleField/Battle'
 export * from './Port/Port'
 export * from './Sea/Sea'
 export * from './Sea/CellMy'

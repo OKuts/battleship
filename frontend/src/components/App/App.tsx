@@ -1,9 +1,10 @@
 import {FC} from 'react'
 import st from './App.module.scss'
 
-import {BattleField} from '..'
+import {Battle, BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {updateFields, updateFlot} from '../../store';
+import {SeaEnemy} from "../Sea/SeaEnemy";
 
 export const App: FC = () => {
   return (
@@ -18,7 +19,9 @@ export const App: FC = () => {
         <Button text='Reset' func={[updateFields, updateFlot]}/>
       </div>
       <div className={st.field}>
-        <BattleField isEnemy/>
+        <Battle>
+          <SeaEnemy/>
+        </Battle>
       </div>
     </div>
   )

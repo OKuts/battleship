@@ -4,7 +4,7 @@ export enum Direction {
 }
 
 export interface IShip {
-  id: number
+  id: string
   direction: Direction
   size: number
   wounds: boolean[]
