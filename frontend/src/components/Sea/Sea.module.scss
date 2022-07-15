@@ -1,24 +1,26 @@
 .table {
+
   tr,
   td {
     border: 1px solid #888;
     border-collapse: collapse;
+    height: 30px;
   }
 
   td {
     width: 30px;
-    height: 30px;
   }
 
   border-collapse: collapse;
+
 }
 
-.cellMark {
-  background-color: palegreen;
+.use {
+  background-color: rgb(243, 87, 87);
 }
 
-.overCell {
-  background-color: cornflowerblue;
+.notUse {
+  background-color: rgb(219, 231, 200);
 }
 
 .ship {

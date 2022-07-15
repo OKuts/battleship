@@ -1,17 +1,19 @@
 import {FC} from 'react'
 import st from './App.module.scss'
 
-import {Battle, BattleField} from '..'
+import {Battle} from '..'
 import {Button} from '../../elements/Button/Button';
 import {updateFields, updateFlot} from '../../store';
-import {SeaEnemy} from "../Sea/SeaEnemy";
+import {Sea} from "../Sea/Sea";
 
 export const App: FC = () => {
   return (
     <div
       className={st.app}>
       <div className={st.field}>
-        <BattleField isEnemy={false}/>
+        <Battle port>
+          <Sea isEnemy={false}/>
+        </Battle>
       </div>
       <div className={st.buttons}>
         <Button text='Button1'/>
@@ -20,7 +22,7 @@ export const App: FC = () => {
       </div>
       <div className={st.field}>
         <Battle>
-          <SeaEnemy/>
+          <Sea isEnemy = {true}/>
         </Battle>
       </div>
     </div>

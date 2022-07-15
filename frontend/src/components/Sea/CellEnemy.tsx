@@ -1,22 +1,23 @@
 import st from './Sea.module.scss'
-import {FC, memo} from 'react'
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {selectEnemyCell} from "../../store";
-import {ICell} from "../../store/types/field";
+import {FC} from 'react'
+import { useAppSelector } from '../../hooks/useAppDispatch'
 
-interface CellProps {
-  cell: ICell
+interface CellEnemyProps {
+  id: string
 }
 
-export const CellEnemy: FC<CellProps> = memo(({cell}) => {
-  const dispatch = useAppDispatch()
+export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
 
-  return (
-    <td
-      onClick={() => dispatch(selectEnemyCell(cell.idCell))}
-      id={`${cell.idCell}`}
-      className={cell.isUse ? st.cellMark : ''}
-    >
-    </td>
-  )
-})
+  const {enemyField} = useAppSelector(state => state.enemy)
+
+  const setClassName = (value: boolean) => {
+    switch (value) {
+      case true : return 'use'
+      case false: return 'notUse'
+      default: return ''
+    }
+  } 
+    
+  return <td className={st[setClassName(enemyField[id])]} id={id}></td>
+
+}
