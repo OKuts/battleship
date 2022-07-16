@@ -6,10 +6,12 @@ import {ShipPart} from "..";
 
 type ShipTypeProps = {
   ship: IShip
+  handlerMouseDown: (e: MouseEvent)=> void
 }
 
-export const Ship: FC<ShipTypeProps> = ({ship}) => {
+export const Ship: FC<ShipTypeProps> = ({ship, handlerMouseDown}) => {
   return <div
+    onMouseDown={(e)=>handlerMouseDown(e)}
     className={st.ship}
     id={`${ship.id}`}
     style={{top: ship.y, left: ship.x}}

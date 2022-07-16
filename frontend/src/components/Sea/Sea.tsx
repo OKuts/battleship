@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useRef} from 'react'
 import st from './Sea.module.scss'
 import {getArr10x10} from "../../utils/getArr10x10";
 import { CellEnemy } from './CellEnemy';
@@ -9,7 +9,13 @@ interface SeaEnemyProps {
 }
 
 export const Sea: FC<SeaEnemyProps> = ({isEnemy}) => {
-  return <table className={st.table}>
+
+  const ref = useRef(null)
+
+  console.log(ref);
+  
+
+  return <table ref={ref} id = {'table'} className={st.table}>
     <tbody>
     {
       getArr10x10().map((line, y) =>

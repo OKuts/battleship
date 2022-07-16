@@ -1,5 +1,4 @@
 export * from './App/App'
-export * from './BattleField/BattleField'
 export * from './BattleField/Battle'
 export * from './Port/Port'
 export * from './Sea/Sea'

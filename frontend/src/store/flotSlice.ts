@@ -10,7 +10,7 @@ const initialState: IInitialFlot = {
   isReady: false
 }
 
-export const shipsSlice = createSlice({
+export const flotSlice = createSlice({
   name: 'ships',
   initialState,
 
@@ -36,5 +36,5 @@ export const shipsSlice = createSlice({
 
 export const {
   setSelectedShip, removeSelectedShip, changePositionSelectedShip, backSelectedShip, updateFlot
-} = shipsSlice.actions
-export default shipsSlice.reducer
+} = flotSlice.actions
+export default flotSlice.reducer
