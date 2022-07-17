@@ -21,7 +21,7 @@ export const flotSlice = createSlice({
     },
 
     updateFlot (state) {
-      state.flot = initialState.flot
+      state.flot = initFlot()
     },
 
     removeSelectedShip(state) {

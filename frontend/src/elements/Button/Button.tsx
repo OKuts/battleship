@@ -11,6 +11,8 @@ export const Button:FC<ButtonProps> = memo(({text, func = null}) => {
     const dispatch = useAppDispatch()
 
     const handlerClick = () => {
+        console.log('update');
+        
         if (func) { func.forEach(el => dispatch(el()))}
     }
 
