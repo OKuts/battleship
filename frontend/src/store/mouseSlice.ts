@@ -15,9 +15,13 @@ export const mouseSlice = createSlice({
     setDxDy (state, action) {
       state.dx = action.payload.x
       state.dy  = action.payload.y
+    },
+
+    setMouseLeftPress(state, action: PayloadAction<boolean>) {
+      state.isMouseLeftPress = action.payload
     }
   },
 })
 
-export const { setDxDy } = mouseSlice.actions
+export const { setDxDy, setMouseLeftPress } = mouseSlice.actions
 export default mouseSlice.reducer
