@@ -1,5 +1,5 @@
 export * from './getCoordinates'
-export * from './getArrId'
+export * from '../components/BattleField/getArrId'
 export * from './initFlot'
 export * from './initField'
 export * from './isTryPlace'

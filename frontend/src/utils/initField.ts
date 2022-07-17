@@ -1,5 +1,3 @@
-import {CellEnemyClass} from "../classes/CellEnemyClass";
-
 export const initField = (enemy: boolean) => {
   return {
     arr: new Array(10).fill(new Array(10).fill(0))

@@ -16,7 +16,8 @@ export const flotSlice = createSlice({
 
   reducers: {
 
-    setSelectedShip(state, action: PayloadAction<number>) {
+    setSelectedShip(state, action: PayloadAction<number | null>) {
+      state.selectedShip = action.payload
     },
 
     updateFlot (state) {
@@ -29,12 +30,17 @@ export const flotSlice = createSlice({
     backSelectedShip(state) {
     },
 
-    changePositionSelectedShip(state, action) {
+    changePositionShip(state, action) {
+      if (state.selectedShip !== null) {
+        state.flot[state.selectedShip].x = action.payload.x
+        state.flot[state.selectedShip].y = action.payload.y
+      }
+
     },
   },
 })
 
 export const {
-  setSelectedShip, removeSelectedShip, changePositionSelectedShip, backSelectedShip, updateFlot
+  setSelectedShip, changePositionShip, updateFlot
 } = flotSlice.actions
 export default flotSlice.reducer

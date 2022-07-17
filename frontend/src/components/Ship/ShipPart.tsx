@@ -6,7 +6,6 @@ type ShipPartProps = {
 }
 
 export const ShipPart: FC<ShipPartProps> = memo(({id}) => {
-
   return <div
     id={`${id}`}
     className={st.shipPart}

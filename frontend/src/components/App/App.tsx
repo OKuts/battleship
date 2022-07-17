@@ -1,29 +1,55 @@
-import {FC} from 'react'
+import {FC, MouseEventHandler} from 'react'
 import st from './App.module.scss'
 
-import {Battle} from '..'
+import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
-import {updateFields, updateFlot} from '../../store';
-import {Sea} from "../Sea/Sea";
+import {changePositionShip, setIsMouseLeftPress, setSelectedShip, updateFlot} from '../../store';
+import {SeaMy} from "../Sea/SeaMy";
+import {SeaEnemy} from "../Sea/SeaEnemy";
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 
 export const App: FC = () => {
+  const dispatch = useAppDispatch()
+  const {selectedShip} = useAppSelector(state => state.flot)
+  const {beginX, beginY} = useAppSelector(state => state.field)
+  const {dx, dy, isMouseLeftPress} = useAppSelector(state => state.mouse)
+
+  const handlerMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (selectedShip !== null && isMouseLeftPress) {
+      if (beginX && beginY && dx && dy) {
+        dispatch(changePositionShip(
+          {
+            x: e.clientX - beginX - dx,
+            y: e.clientY - beginY - dy
+          }))
+      }
+    }
+  }
+
+  const handlerMouseUp: MouseEventHandler<HTMLDivElement> = (e) => {
+    dispatch(setIsMouseLeftPress(false))
+    dispatch(setSelectedShip(null))
+  }
+
   return (
     <div
+      onMouseMove={handlerMouseMove}
+      onMouseUp={handlerMouseUp}
       className={st.app}>
       <div className={st.field}>
-        <Battle port>
-          <Sea isEnemy={false}/>
-        </Battle>
+        <BattleField port>
+          <SeaMy/>
+        </BattleField>
       </div>
       <div className={st.buttons}>
         <Button text='Button1'/>
         <Button text='Button2'/>
-        <Button text='Reset' func={[updateFields, updateFlot]}/>
+        <Button text='Reset' func={[updateFlot]}/>
       </div>
       <div className={st.field}>
-        <Battle>
-          <Sea isEnemy = {true}/>
-        </Battle>
+        <BattleField>
+          <SeaEnemy/>
+        </BattleField>
       </div>
     </div>
   )

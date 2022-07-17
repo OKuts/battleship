@@ -4,6 +4,7 @@ export enum ShipDirection {
 }
 
 export class ShipClass {
+  i: number
   id: string
   direction: ShipDirection
   size: number
@@ -11,11 +12,12 @@ export class ShipClass {
   x: number | null
   y: number | null
 
-  constructor(shipId: string) {
+  constructor(shipId: string, i: number) {
     const ship = Number(shipId[0])
     const count = 4 - ship
     const index = Number(shipId[1])
     const start = index * ship * 30 - (count) * 2
+    this.i = i
     this.id = shipId
     this.direction = ShipDirection.ROW
     this.size = ship

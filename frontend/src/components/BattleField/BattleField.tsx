@@ -8,7 +8,7 @@ interface IBattleProps {
   port?: boolean
 }
 
-export const Battle: FC<IBattleProps> = ({children, port}) => {
+export const BattleField: FC<IBattleProps> = ({children, port}) => {
   return (
     <div>
     <div className={st.numberLine}>

@@ -5,11 +5,11 @@ export enum Direction {
   COLUMN,
 }
 
-export interface ISelectedShip extends Omit <ShipClass, 'wounds'>{}
+// export interface ISelectedShip extends Omit <ShipClass, 'wounds'>{}
 
 export interface IInitialFlot {
   flot: ShipClass[],
-  selectedShip: ISelectedShip | null
+  selectedShip: number | null
   isReady: boolean
 }
 
