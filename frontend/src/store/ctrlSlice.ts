@@ -1,6 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
+export interface ICtrl {
+  isCtrlPressed: boolean
+}
+
+const initialState: ICtrl = {
   isCtrlPressed: false,
 }
 
@@ -11,7 +15,7 @@ export const ctrlSlice = createSlice({
   reducers: {
 
     setIsCtrlPressed(state, action: PayloadAction<boolean>) {
-      state.isCtrlPressed = action.payload
+      state.isCtrlPressed = action.payload ? !state.isCtrlPressed : action.payload
     },
   },
 })

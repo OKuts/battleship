@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import fieldReducer from './fieldSlice'
 import flotReducer from './flotSlice'
 import mouseReducer from './mouseSlice'
-import ctrlReducer from './ctrlSlice'
+import ctrlReducer, {ICtrl} from './ctrlSlice'
 import enemyReducer from './seaEnemySlice'
 
 export const store =  configureStore ({

@@ -1,12 +1,7 @@
-export enum ShipDirection {
-  ROW,
-  COLUMN,
-}
-
 export class ShipClass {
   i: number
   id: string
-  direction: ShipDirection
+  direction: boolean
   size: number
   wounds: boolean[]
   x: number | null
@@ -19,7 +14,7 @@ export class ShipClass {
     const start = index * ship * 30 - (count) * 2
     this.i = i
     this.id = shipId
-    this.direction = ShipDirection.ROW
+    this.direction = true
     this.size = ship
     this.wounds = Array(ship).fill(false)
     this.x = 150 + start - ship / 2 * 30 - count * 15 * ship + index * 4

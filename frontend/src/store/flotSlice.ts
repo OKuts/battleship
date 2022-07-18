@@ -3,7 +3,6 @@ import {initFlot} from "../utils";
 import {IInitialFlot} from "./types/ship";
 
 
-
 const initialState: IInitialFlot = {
   flot: initFlot(),
   selectedShip: null,
@@ -20,14 +19,13 @@ export const flotSlice = createSlice({
       state.selectedShip = action.payload
     },
 
-    updateFlot (state) {
+    updateFlot(state) {
       state.flot = initFlot()
     },
 
-    removeSelectedShip(state) {
-    },
-
-    backSelectedShip(state) {
+    changeDirection(state) {
+      if (state.selectedShip !== null)
+        state.flot[state.selectedShip].direction = !state.flot[state.selectedShip].direction
     },
 
     changePositionShip(state, action) {
@@ -35,12 +33,11 @@ export const flotSlice = createSlice({
         state.flot[state.selectedShip].x = action.payload.x
         state.flot[state.selectedShip].y = action.payload.y
       }
-
     },
   },
 })
 
 export const {
-  setSelectedShip, changePositionShip, updateFlot
+  setSelectedShip, changePositionShip, updateFlot, changeDirection
 } = flotSlice.actions
 export default flotSlice.reducer
