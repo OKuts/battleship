@@ -1,15 +1,9 @@
 import { ShipClass } from "../../classes/ShipClass"
 
-export enum Direction {
-  ROW,
-  COLUMN,
-}
-
-// export interface ISelectedShip extends Omit <ShipClass, 'wounds'>{}
-
 export interface IInitialFlot {
-  flot: ShipClass[],
+  flot: ShipClass[]
   selectedShip: number | null
   isReady: boolean
+  rerender: boolean
 }
 

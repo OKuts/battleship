@@ -5,7 +5,7 @@ import {ShipClass} from "../../classes/ShipClass";
 
 export const Port: FC = () => {
   const {flot} = useAppSelector(state => state.flot)
-
+  
   return <>
     {flot.map((ship: ShipClass) =>
       <Ship

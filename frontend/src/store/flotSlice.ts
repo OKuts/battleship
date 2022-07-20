@@ -6,7 +6,8 @@ import {IInitialFlot} from "./types/ship";
 const initialState: IInitialFlot = {
   flot: initFlot(),
   selectedShip: null,
-  isReady: false
+  isReady: false,
+  rerender: false
 }
 
 export const flotSlice = createSlice({
@@ -24,16 +25,18 @@ export const flotSlice = createSlice({
     },
 
     changeDirection(state) {
-      if (state.selectedShip !== null)
+      if (state.selectedShip !== null) {
         state.flot[state.selectedShip].direction = !state.flot[state.selectedShip].direction
+      }
     },
 
     changePositionShip(state, action) {
       if (state.selectedShip !== null) {
         state.flot[state.selectedShip].x = action.payload.x
         state.flot[state.selectedShip].y = action.payload.y
+        state.rerender = !state.rerender
       }
-    },
+    }, 
   },
 })
 
