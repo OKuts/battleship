@@ -5,5 +5,6 @@ export interface IInitialFlot {
   selectedShip: number | null
   isReady: boolean
   rerender: boolean
+  isCtrlPressed: boolean
 }
 

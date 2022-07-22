@@ -3,7 +3,10 @@ import st from './App.module.scss'
 
 import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
-import {changeDirection, changePositionShip, setIsCtrlPressed, setMouseLeftPress, updateFlot} from '../../store';
+import {
+  changeDirection, changePositionShip, setIsCtrlPressed,
+  setMouseLeftPress, updateFlot,
+} from '../../store';
 import {SeaMy} from "../Sea/SeaMy";
 import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
@@ -12,14 +15,14 @@ export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {beginX, beginY} = useAppSelector(state => state.field)
   const {dx, dy, isMouseLeftPress} = useAppSelector(state => state.mouse)
-  const {isCtrlPressed} = useAppSelector(state => state.ctrl)
+  const {isCtrlPressed} = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
     if (beginX && beginY && dx && dy && isMouseLeftPress) {
       dispatch(changePositionShip({x: x - beginX - dx, y: y - beginY - dy}))
     }
   }
-    
+
   const handlerCtrlUp = (e: KeyboardEvent) => {
     if (e.key === 'Control') dispatch(setIsCtrlPressed(true))
   }
