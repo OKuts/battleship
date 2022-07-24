@@ -4,7 +4,7 @@ import st from './App.module.scss'
 import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {
-  changeDirection, changePositionShip, setIsCtrlPressed,
+  changePositionShip, setIsCtrlPressed,
   setMouseLeftPress, updateFlot,
 } from '../../store';
 import {SeaMy} from "../Sea/SeaMy";
@@ -14,7 +14,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {
-    isCtrlPressed, flot, selectedShip, beginX, beginY, dx, dy, isMouseLeftPress
+    beginX, beginY, dx, dy, isMouseLeftPress
   } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
@@ -26,12 +26,6 @@ export const App: FC = () => {
   const handlerCtrlUp = function (e: KeyboardEvent) {
     if (e.key === 'Control') {
       dispatch(setIsCtrlPressed(true))
-      // if (selectedShip !== null && dx !== null) {
-      //   dispatch(changePositionShip({
-      //     x: flot[selectedShip].x + dx,
-      //     y: flot[selectedShip].y
-      //   }))
-      // }
     }
   }
 
@@ -40,15 +34,11 @@ export const App: FC = () => {
     return
   }, [])
 
-  useEffect(() => {
-    dispatch(changeDirection())
-  }, [isCtrlPressed])
-
   return (
     <div
       onMouseMove={(e) => handlerMouseMove(e.clientX, e.clientY)}
       onMouseUp={() => dispatch(setMouseLeftPress(false))}
-      className={st.app}>
+      className={isMouseLeftPress ? st.mouseOff : st.app}>
       <div className={st.field}>
         <BattleField port children={<SeaMy/>} />
       </div>

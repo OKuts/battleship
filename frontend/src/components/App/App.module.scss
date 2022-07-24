@@ -17,3 +17,8 @@
   justify-content: center;
 }
 
+.mouseOff {
+  composes: app;
+  cursor: none;
+}
+

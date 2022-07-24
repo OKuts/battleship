@@ -6,11 +6,11 @@ export interface IInitialFlot {
   isReady: boolean
   rerender: boolean
   isCtrlPressed: boolean
-  beginX: number | null
-  beginY: number | null
+  beginX: number
+  beginY: number
   isMouseLeftPress: boolean
-  dx: number | null
-  dy: number | null
+  dx: number
+  dy: number
   rememberX: number | null
   rememberY: number | null
 }

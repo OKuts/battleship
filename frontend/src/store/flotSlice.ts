@@ -2,18 +2,17 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {initFlot} from "../utils";
 import {IInitialFlot} from "./types/ship";
 
-
 const initialState: IInitialFlot = {
   flot: initFlot(),
   selectedShip: null,
   isReady: false,
   rerender: false,
   isCtrlPressed: false,
-  beginX: null,
-  beginY: null,
+  beginX: 0,
+  beginY: 0,
   isMouseLeftPress: false,
-  dx: null,
-  dy: null,
+  dx: 0,
+  dy: 0,
   rememberX: null,
   rememberY: null,
 }
@@ -32,10 +31,10 @@ export const flotSlice = createSlice({
       state.flot = initFlot()
     },
 
-    changeDirection(state) {
+    setIsCtrlPressed(state, action: PayloadAction<boolean>) {
       if (state.selectedShip !== null) {
+        state.isCtrlPressed = action.payload ? !state.isCtrlPressed : action.payload
         state.flot[state.selectedShip].direction = !state.flot[state.selectedShip].direction
-        state.rerender = !state.rerender
       }
     },
 
@@ -45,10 +44,6 @@ export const flotSlice = createSlice({
         state.flot[state.selectedShip].y = action.payload.y
         state.rerender = !state.rerender
       }
-    },
-
-    setIsCtrlPressed(state, action: PayloadAction<boolean>) {
-      state.isCtrlPressed = action.payload ? !state.isCtrlPressed : action.payload
     },
 
     setBegin(state, action) {
@@ -64,6 +59,11 @@ export const flotSlice = createSlice({
 
     setMouseLeftPress(state, action: PayloadAction<boolean>) {
       state.isMouseLeftPress = action.payload
+      state.selectedShip = null
+      // if (state.selectedShip !== null) {
+      //   state.flot[state.selectedShip].x = state.rememberX
+      //   state.flot[state.selectedShip].y = state.rememberY
+      // }
     },
 
     setRemember(state) {
@@ -71,14 +71,13 @@ export const flotSlice = createSlice({
         state.rememberX = state.flot[state.selectedShip].x
         state.rememberY = state.flot[state.selectedShip].y
       }
-
     },
 
   },
 })
 
 export const {
-  setSelectedShip, changePositionShip, updateFlot, changeDirection, setIsCtrlPressed,
+  setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
   setBegin, setDxDy, setMouseLeftPress, setRemember
 } = flotSlice.actions
 export default flotSlice.reducer

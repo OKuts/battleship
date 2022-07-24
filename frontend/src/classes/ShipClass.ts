@@ -2,8 +2,8 @@ export class ShipClass {
   id: string
   direction: boolean
   wounds: boolean[]
-  x: number | null
-  y: number | null
+  x: number
+  y: number
 
   constructor(shipId: string) {
     const ship = Number(shipId[0])

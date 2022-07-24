@@ -5,10 +5,6 @@ type ShipPartProps = {
   id: number
 }
 
-export const ShipPart: FC<ShipPartProps> = memo(({id}) => {
-  return <div
-    id={`${id}`}
-    className={st.shipPart}
-  >
-  </div>
-})
+export const ShipPart: FC<ShipPartProps> = memo(({id}) =>
+  <div id={`${id}`} className={st.shipPart} />
+)
