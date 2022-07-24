@@ -15,7 +15,7 @@ export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {beginX, beginY} = useAppSelector(state => state.field)
   const {dx, dy, isMouseLeftPress} = useAppSelector(state => state.mouse)
-  const {isCtrlPressed} = useAppSelector(state => state.flot)
+  const {isCtrlPressed, flot, selectedShip} = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
     if (beginX && beginY && dx && dy && isMouseLeftPress) {
@@ -23,8 +23,16 @@ export const App: FC = () => {
     }
   }
 
-  const handlerCtrlUp = (e: KeyboardEvent) => {
-    if (e.key === 'Control') dispatch(setIsCtrlPressed(true))
+  const handlerCtrlUp = function (e: KeyboardEvent) {
+    if (e.key === 'Control') {
+      dispatch(setIsCtrlPressed(true))
+      // if (selectedShip !== null && dx !== null) {
+      //   dispatch(changePositionShip({
+      //     x: flot[selectedShip].x + dx,
+      //     y: flot[selectedShip].y
+      //   }))
+      // }
+    }
   }
 
   useEffect(() => {

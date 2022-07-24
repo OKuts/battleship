@@ -43,6 +43,8 @@ export const flotSlice = createSlice({
     setIsCtrlPressed(state, action: PayloadAction<boolean>) {
       state.isCtrlPressed = action.payload ? !state.isCtrlPressed : action.payload
     },
+
+
   },
 })
 
