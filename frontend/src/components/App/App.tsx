@@ -13,9 +13,9 @@ import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
-  const {beginX, beginY} = useAppSelector(state => state.field)
-  const {dx, dy, isMouseLeftPress} = useAppSelector(state => state.mouse)
-  const {isCtrlPressed, flot, selectedShip} = useAppSelector(state => state.flot)
+  const {
+    isCtrlPressed, flot, selectedShip, beginX, beginY, dx, dy, isMouseLeftPress
+  } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
     if (beginX && beginY && dx && dy && isMouseLeftPress) {

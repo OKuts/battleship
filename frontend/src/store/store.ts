@@ -1,14 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
-import fieldReducer from './fieldSlice'
 import flotReducer from './flotSlice'
-import mouseReducer from './mouseSlice'
 import enemyReducer from './seaEnemySlice'
 
 export const store =  configureStore ({
     reducer: {
-        field: fieldReducer,
         flot: flotReducer,
-        mouse: mouseReducer,
         enemy: enemyReducer
     },
     middleware: getDefaultMiddleware =>

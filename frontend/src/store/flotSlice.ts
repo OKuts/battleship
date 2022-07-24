@@ -9,6 +9,13 @@ const initialState: IInitialFlot = {
   isReady: false,
   rerender: false,
   isCtrlPressed: false,
+  beginX: null,
+  beginY: null,
+  isMouseLeftPress: false,
+  dx: null,
+  dy: null,
+  rememberX: null,
+  rememberY: null,
 }
 
 export const flotSlice = createSlice({
@@ -44,11 +51,34 @@ export const flotSlice = createSlice({
       state.isCtrlPressed = action.payload ? !state.isCtrlPressed : action.payload
     },
 
+    setBegin(state, action) {
+      const {beginX, beginY} = action.payload
+      state.beginX = beginX
+      state.beginY = beginY
+    },
+
+    setDxDy(state, action) {
+      state.dx = action.payload.x
+      state.dy = action.payload.y
+    },
+
+    setMouseLeftPress(state, action: PayloadAction<boolean>) {
+      state.isMouseLeftPress = action.payload
+    },
+
+    setRemember(state) {
+      if (state.selectedShip !== null) {
+        state.rememberX = state.flot[state.selectedShip].x
+        state.rememberY = state.flot[state.selectedShip].y
+      }
+
+    },
 
   },
 })
 
 export const {
-  setSelectedShip, changePositionShip, updateFlot, changeDirection, setIsCtrlPressed
+  setSelectedShip, changePositionShip, updateFlot, changeDirection, setIsCtrlPressed,
+  setBegin, setDxDy, setMouseLeftPress, setRemember
 } = flotSlice.actions
 export default flotSlice.reducer
