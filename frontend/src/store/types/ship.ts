@@ -11,7 +11,7 @@ export interface IInitialFlot {
   isMouseLeftPress: boolean
   dx: number
   dy: number
-  rememberX: number | null
-  rememberY: number | null
+  rememberX: number
+  rememberY: number
 }
 

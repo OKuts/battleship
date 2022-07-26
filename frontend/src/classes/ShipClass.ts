@@ -4,6 +4,7 @@ export class ShipClass {
   wounds: boolean[]
   x: number
   y: number
+  isOnSea: boolean
 
   constructor(shipId: string) {
     const ship = Number(shipId[0])
@@ -12,6 +13,7 @@ export class ShipClass {
     const start = index * ship * 30 - (count) * 2
     this.id = shipId
     this.direction = true
+    this.isOnSea = false
     this.wounds = Array(ship).fill(false)
     this.x = 150 + start - ship / 2 * 30 - count * 15 * ship + index * 4
     this.y = 304 + (120 - ship * 30) + count * 4

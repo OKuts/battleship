@@ -10,6 +10,7 @@ import {
 import {SeaMy} from "../Sea/SeaMy";
 import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {createLogger} from "vite";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
@@ -22,7 +23,6 @@ export const App: FC = () => {
       dispatch(changePositionShip({x: x - beginX - dx, y: y - beginY - dy}))
     }
   }
-
   const handlerCtrlUp = function (e: KeyboardEvent) {
     if (e.key === 'Control') {
       dispatch(setIsCtrlPressed(true))

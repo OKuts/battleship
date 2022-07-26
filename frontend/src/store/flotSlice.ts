@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {initFlot} from "../utils";
+import {initFlot, isCoordinatesIn, isTryToPlace} from "../utils";
 import {IInitialFlot} from "./types/ship";
 
 const initialState: IInitialFlot = {
@@ -13,8 +13,8 @@ const initialState: IInitialFlot = {
   isMouseLeftPress: false,
   dx: 0,
   dy: 0,
-  rememberX: null,
-  rememberY: null,
+  rememberX: 0,
+  rememberY: 0,
 }
 
 export const flotSlice = createSlice({
@@ -59,11 +59,27 @@ export const flotSlice = createSlice({
 
     setMouseLeftPress(state, action: PayloadAction<boolean>) {
       state.isMouseLeftPress = action.payload
-      state.selectedShip = null
-      // if (state.selectedShip !== null) {
-      //   state.flot[state.selectedShip].x = state.rememberX
-      //   state.flot[state.selectedShip].y = state.rememberY
-      // }
+      if (state.selectedShip !== null) {
+        const ship = state.flot[state.selectedShip]
+        const x = Math.round(ship.x / 30)
+        const y = Math.round(ship.y / 30)
+        if (isCoordinatesIn(x, y, ship.direction, Number(ship.id[0]))) {
+          ship.x = x * 30 - 1
+          ship.y = y * 30
+          ship.isOnSea = true
+          if (!isTryToPlace(state.flot)) {
+            ship.x = state.rememberX
+            ship.y = state.rememberY
+            ship.direction = true
+          }
+        } else {
+          ship.x = state.rememberX
+          ship.y = state.rememberY
+          ship.direction = true
+        }
+        state.selectedShip = null
+        state.rerender = !state.rerender
+      }
     },
 
     setRemember(state) {

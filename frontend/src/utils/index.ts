@@ -1,5 +1,4 @@
-export * from './getCoordinates'
 export * from './initFlot'
 export * from './initField'
-export * from './isTryPlace'
-export * from './isCoordinateIn'
+export * from './isTryToPlace'
+export * from './isCoordinatesIn'
