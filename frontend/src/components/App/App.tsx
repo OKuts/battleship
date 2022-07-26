@@ -5,12 +5,11 @@ import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {
   changePositionShip, setIsCtrlPressed,
-  setMouseLeftPress, updateFlot,
+  setMouseLeftPress, updateFlot, updateSeaEnemy,
 } from '../../store';
 import {SeaMy} from "../Sea/SeaMy";
 import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
-import {createLogger} from "vite";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
@@ -45,7 +44,7 @@ export const App: FC = () => {
       <div className={st.buttons}>
         <Button text='Button1'/>
         <Button text='Button2'/>
-        <Button text='Reset' func={[updateFlot]}/>
+        <Button text='Reset' func={[updateFlot, updateSeaEnemy]}/>
       </div>
       <div className={st.field}>
         <BattleField children={<SeaEnemy/>} />

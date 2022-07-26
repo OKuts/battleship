@@ -10,12 +10,17 @@ export const seaEnemySlice = createSlice({
   initialState,
 
   reducers: {
-    initSeaEnemy() {
+    updateSeaEnemy(state) {
+      state.enemyField = initEnemyField()
     },
+
+    nextStep(state, action: PayloadAction<string>) {
+      state.enemyField[action.payload] = true
+    }
   },
 })
 
 export const {
-  initSeaEnemy
+  updateSeaEnemy, nextStep
 } = seaEnemySlice.actions
 export default seaEnemySlice.reducer

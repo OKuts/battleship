@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {initFlot, isCoordinatesIn, isTryToPlace} from "../utils";
+import {controlIsReady, initFlot, isCoordinatesIn, isTryToPlace} from "../utils";
 import {IInitialFlot} from "./types/ship";
 
 const initialState: IInitialFlot = {
@@ -22,7 +22,6 @@ export const flotSlice = createSlice({
   initialState,
 
   reducers: {
-
     setSelectedShip(state, action: PayloadAction<number | null>) {
       state.selectedShip = action.payload
     },
@@ -71,6 +70,7 @@ export const flotSlice = createSlice({
             ship.x = state.rememberX
             ship.y = state.rememberY
             ship.direction = true
+            ship.isOnSea = false
           }
         } else {
           ship.x = state.rememberX
@@ -80,6 +80,7 @@ export const flotSlice = createSlice({
         state.selectedShip = null
         state.rerender = !state.rerender
       }
+      state.isReady = !state.isMouseLeftPress && controlIsReady(state.flot)
     },
 
     setRemember(state) {
