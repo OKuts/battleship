@@ -1,7 +1,8 @@
-import st from './Sea.module.scss'
 import {FC} from 'react'
+import st from './Sea.module.scss'
 import {useAppDispatch, useAppSelector} from '../../hooks/useAppDispatch'
-import {nextStep} from "../../store";
+import {nextStep, setIsReady} from "../../store";
+import {controlIsReady} from "../../utils";
 
 interface CellEnemyProps {
   id: string
@@ -10,6 +11,14 @@ interface CellEnemyProps {
 export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
   const dispatch = useAppDispatch()
   const {enemyField} = useAppSelector(state => state.enemy)
+  const {isReady, flot} = useAppSelector(state => state.flot)
+
+  const handlerClick = (id: string) => {
+    if (isReady || controlIsReady(flot)) {
+      dispatch(setIsReady())
+      dispatch(nextStep(id))
+    }
+  }
 
   const setClassName = (value: boolean | null) => {
     switch (value) {
@@ -20,7 +29,7 @@ export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
   }
 
   return <td
-    onClick={() => dispatch(nextStep(id))}
+    onClick={() => handlerClick(id)}
     className={st[setClassName(enemyField[id])]} id={id}>
   </td>
 

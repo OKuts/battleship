@@ -1,5 +1,5 @@
-import st from "./Ship.module.scss";
 import {FC, memo} from "react";
+import st from "./Ship.module.scss";
 
 type ShipPartProps = {
   id: number

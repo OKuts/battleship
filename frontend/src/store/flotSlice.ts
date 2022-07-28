@@ -80,7 +80,10 @@ export const flotSlice = createSlice({
         state.selectedShip = null
         state.rerender = !state.rerender
       }
-      state.isReady = !state.isMouseLeftPress && controlIsReady(state.flot)
+    },
+
+    setIsReady(state) {
+      state.isReady = controlIsReady(state.flot)
     },
 
     setRemember(state) {
@@ -95,6 +98,6 @@ export const flotSlice = createSlice({
 
 export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
-  setBegin, setDxDy, setMouseLeftPress, setRemember
+  setBegin, setDxDy, setMouseLeftPress, setRemember, setIsReady
 } = flotSlice.actions
 export default flotSlice.reducer

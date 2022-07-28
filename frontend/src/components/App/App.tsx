@@ -10,6 +10,7 @@ import {
 import {SeaMy} from "../Sea/SeaMy";
 import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
+import {Modal} from "../Modal/Modal";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
@@ -49,6 +50,7 @@ export const App: FC = () => {
       <div className={st.field}>
         <BattleField children={<SeaEnemy/>} />
       </div>
+      <Modal/>
     </div>
   )
 }

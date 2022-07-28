@@ -1,6 +1,7 @@
 import {FC, memo} from 'react'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
 import st from './Button.module.scss'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+
 
 type ButtonProps = {
     text: string,
@@ -12,7 +13,7 @@ export const Button:FC<ButtonProps> = memo(({text, func = null}) => {
 
     const handlerClick = () => {
         console.log('update');
-        
+
         if (func) { func.forEach(el => dispatch(el()))}
     }
 
