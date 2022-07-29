@@ -1,23 +1,14 @@
-import {FC} from "react";
+import {FC, ReactNode} from "react";
 import {createPortal} from "react-dom";
 import st from './Modal.module.scss'
-import {useAppSelector} from "../../hooks/useAppDispatch";
-
 const modal = document.querySelector('#modal')
 
-interface IModalProps {
-  text: string
+interface IChildren {
+  children: ReactNode
 }
 
-const Element: FC<IModalProps> = ({text}) => <div className={st.modal}>
-  <div>{text}</div>
-</div>
-
-
-export const Modal: FC = () =>{
-  const { isMouseLeftPress } = useAppSelector(state => state.flot)
-  const text = isMouseLeftPress ? 'Hello' : 'Bye'
-  return modal ? createPortal(<Element text={text}/>, modal) : null
+export const Modal: FC<IChildren> = ({children}) =>{
+  return modal ? createPortal(<div className={st.modal}>{children}</div>, modal) : null
 }
 
 

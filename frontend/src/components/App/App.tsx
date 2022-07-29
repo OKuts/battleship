@@ -11,11 +11,13 @@ import {SeaMy} from "../Sea/SeaMy";
 import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {Modal} from "../Modal/Modal";
+import {Message} from "../Message/Message";
+
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {
-    beginX, beginY, dx, dy, isMouseLeftPress
+    beginX, beginY, dx, dy, isMouseLeftPress, isReady
   } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
@@ -50,7 +52,7 @@ export const App: FC = () => {
       <div className={st.field}>
         <BattleField children={<SeaEnemy/>} />
       </div>
-      <Modal/>
-    </div>
+      <Modal children={<Message text={isReady ? 'Go' : 'Try'}/>}/>
+     </div>
   )
 }

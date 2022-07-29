@@ -28,6 +28,7 @@ export const flotSlice = createSlice({
 
     updateFlot(state) {
       state.flot = initFlot()
+      state.isReady = false
     },
 
     setIsCtrlPressed(state, action: PayloadAction<boolean>) {
