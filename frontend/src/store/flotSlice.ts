@@ -1,6 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {controlIsReady, initFlot, isCoordinatesIn, isTryToPlace} from "../utils";
 import {IInitialFlot} from "./types/ship";
+import {getSeaArr} from "../utils/getSeaArr";
+import {getRandomIndex} from "../utils/getRandomIndex";
+
 
 const initialState: IInitialFlot = {
   flot: initFlot(),
@@ -29,6 +32,29 @@ export const flotSlice = createSlice({
     updateFlot(state) {
       state.flot = initFlot()
       state.isReady = false
+    },
+
+    initFlotAuto(state) {
+      state.flot = initFlot()
+      state.isReady = false
+      const emptyCells = getSeaArr()
+      state.flot.forEach((ship, i) => {
+        const randomDirection = !!getRandomIndex(2)
+        const randomCell = getRandomIndex(emptyCells.length)
+        const cell = emptyCells[randomCell]
+        const x = Number(cell[1])
+        const y = Number(cell[0])
+        const randomId = ship.id + y + x
+        if (isCoordinatesIn(x, y, randomDirection, Number(ship.id[0]))) {
+          state.flot[i] = {
+            ...state.flot[1],
+            id: randomId,
+            x: Number(cell[1]) * 30,
+            y: Number(cell[0]) * 30.,
+            direction: randomDirection,
+          }
+        }
+      })
     },
 
     setIsCtrlPressed(state, action: PayloadAction<boolean>) {
@@ -64,7 +90,7 @@ export const flotSlice = createSlice({
         const x = Math.round(ship.x / 30)
         const y = Math.round(ship.y / 30)
         if (isCoordinatesIn(x, y, ship.direction, Number(ship.id[0]))) {
-          ship.x = x * 30 - 1
+          ship.x = x * 30
           ship.y = y * 30
           ship.isOnSea = true
           if (!isTryToPlace(state.flot)) {
@@ -72,6 +98,8 @@ export const flotSlice = createSlice({
             ship.y = state.rememberY
             ship.direction = true
             ship.isOnSea = false
+          } else {
+            ship.id = ship.id.slice(0, 3) + y + x
           }
         } else {
           ship.x = state.rememberX
@@ -99,6 +127,6 @@ export const flotSlice = createSlice({
 
 export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
-  setBegin, setDxDy, setMouseLeftPress, setRemember, setIsReady
+  setBegin, setDxDy, setMouseLeftPress, setRemember, setIsReady, initFlotAuto
 } = flotSlice.actions
 export default flotSlice.reducer

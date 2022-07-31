@@ -30,7 +30,7 @@ export const Ship: FC<ShipTypeProps> = ({ship}) => {
     onMouseDown={(e) => handlerMouseDown(e.clientX, e.clientY, ship)}
     className={ship.direction ? st.ship : st.shipV}
     id={`${ship.id}`}
-    style={{top: ship.y || 0, left: ship.x || 0 }}
+    style={{top: ship.y - 1 || 0, left: ship.x - 2 || 0 }}
   >
     {Array(Number(ship.id[0])).fill('').map((_, i) =>
       <ShipPart key={i} id={i}/>)}

@@ -4,7 +4,7 @@ import st from './App.module.scss'
 import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {
-  changePositionShip, setIsCtrlPressed,
+  changePositionShip, initFlotAuto, setIsCtrlPressed,
   setMouseLeftPress, updateFlot, updateSeaEnemy,
 } from '../../store';
 import {SeaMy} from "../Sea/SeaMy";
@@ -45,8 +45,7 @@ export const App: FC = () => {
         <BattleField port children={<SeaMy/>} />
       </div>
       <div className={st.buttons}>
-        <Button text='Button1'/>
-        <Button text='Button2'/>
+        <Button text='Auto' func={[initFlotAuto]}/>
         <Button text='Reset' func={[updateFlot, updateSeaEnemy]}/>
       </div>
       <div className={st.field}>
