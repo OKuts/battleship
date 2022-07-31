@@ -6,6 +6,7 @@ export interface IInitialFlot {
   flot: ShipClass[]
   selectedShip: number | null
   isReady: boolean
+  gameText: string
   rerender: boolean
   isCtrlPressed: boolean
   beginX: number

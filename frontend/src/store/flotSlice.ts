@@ -1,13 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {controlIsReady, initFlot, isCoordinatesIn, isTryToPlace} from "../utils";
+import {
+  controlIsReady, getShipAround, initFlot, isCoordinatesIn,
+  isTryToPlace, getSeaArr, getRandomIndex} from "../utils";
 import {IInitialFlot} from "./types/ship";
-import {getSeaArr} from "../utils/getSeaArr";
-import {getRandomIndex} from "../utils/getRandomIndex";
 
 const initialState: IInitialFlot = {
   flot: initFlot(),
   selectedShip: null,
   isReady: false,
+  gameText: 'Try',
   rerender: false,
   isCtrlPressed: false,
   beginX: 0,
@@ -32,20 +33,23 @@ export const flotSlice = createSlice({
     updateFlot(state) {
       state.flot = initFlot()
       state.isReady = false
+      state.gameText = 'Try'
     },
 
     initFlotAuto(state) {
       state.flot = initFlot()
       state.isReady = false
+      state.gameText = 'Try'
       let emptyCells = getSeaArr()
-      let count = 9
       state.flot.forEach((ship, i) => {
+        let flag = true
         do {
-          const randomDirection = !!getRandomIndex(2)
+           const randomDirection = !!getRandomIndex(2)
           const randomCell = getRandomIndex(emptyCells.length)
           const cell = emptyCells[randomCell]
           const x = Number(cell[1])
           const y = Number(cell[0])
+
           if (isCoordinatesIn(x, y, randomDirection, Number(ship.id[0]))) {
             const tempFlot = [...state.flot]
             tempFlot[i] = {
@@ -54,17 +58,16 @@ export const flotSlice = createSlice({
               x: Number(cell[1]) * 30,
               y: Number(cell[0]) * 30,
               direction: randomDirection,
+              isOnSea: true
             }
-            console.log(isTryToPlace(tempFlot));
-            console.log(tempFlot);
-            
             if (isTryToPlace(tempFlot)) {
               state.flot[i] = tempFlot[i]
-              
-              count--
+              const [shipAround] = getShipAround(tempFlot[i])
+              emptyCells = emptyCells.filter(el => !shipAround.includes(el))
+              flag = false
             }
-          } 
-        } while (count > 0)
+          }
+        } while (flag)
       })
     },
 
@@ -113,8 +116,9 @@ export const flotSlice = createSlice({
             state.flot[state.selectedShip] = ship
             selectedShip.id = ship.id.slice(0, 3) + y + x
             flag = false
-          } 
-        } 
+            if (controlIsReady(state.flot)) state.gameText = 'Ready'
+          }
+        }
         if (flag) {
           selectedShip.x = state.rememberX
           selectedShip.y = state.rememberY
@@ -127,6 +131,15 @@ export const flotSlice = createSlice({
 
     setIsReady(state) {
       state.isReady = controlIsReady(state.flot)
+      state.gameText = 'Go'
+    },
+
+    setMessageReady(state) {
+      state.gameText = 'Ready'
+    },
+
+    changeMessage(state, action) {
+      state.gameText = action.payload
     },
 
     setRemember(state) {
@@ -136,12 +149,12 @@ export const flotSlice = createSlice({
         state.rememberDirection = state.flot[state.selectedShip].direction
       }
     }
-
   },
 })
 
 export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
-  setBegin, setDxDy, setMouseLeftPress, setRemember, setIsReady, initFlotAuto
+  changeMessage, setBegin, setDxDy, setMouseLeftPress, setRemember,
+  setIsReady, initFlotAuto, setMessageReady
 } = flotSlice.actions
 export default flotSlice.reducer

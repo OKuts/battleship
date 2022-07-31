@@ -4,7 +4,7 @@ import st from './App.module.scss'
 import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {
-  changePositionShip, initFlotAuto, setIsCtrlPressed,
+  changePositionShip, initFlotAuto, setIsCtrlPressed, setMessageReady,
   setMouseLeftPress, updateFlot, updateSeaEnemy,
 } from '../../store';
 import {SeaMy} from "../Sea/SeaMy";
@@ -17,7 +17,7 @@ import {Message} from "../Message/Message";
 export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {
-    beginX, beginY, dx, dy, isMouseLeftPress, isReady
+    beginX, beginY, dx, dy, isMouseLeftPress, gameText
   } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
@@ -45,13 +45,13 @@ export const App: FC = () => {
         <BattleField port children={<SeaMy/>} />
       </div>
       <div className={st.buttons}>
-        <Button text='Auto' func={[initFlotAuto]}/>
+        <Button text='Auto' func={[initFlotAuto, setMessageReady]}/>
         <Button text='Reset' func={[updateFlot, updateSeaEnemy]}/>
       </div>
       <div className={st.field}>
         <BattleField children={<SeaEnemy/>} />
       </div>
-      <Modal children={<Message text={isReady ? 'Go' : 'Try'}/>}/>
+      <Modal children={<Message text={gameText}/>}/>
      </div>
   )
 }
