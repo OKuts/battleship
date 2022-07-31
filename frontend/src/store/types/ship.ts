@@ -1,5 +1,7 @@
 import { ShipClass } from "../../classes/ShipClass"
 
+
+
 export interface IInitialFlot {
   flot: ShipClass[]
   selectedShip: number | null
@@ -13,5 +15,6 @@ export interface IInitialFlot {
   dy: number
   rememberX: number
   rememberY: number
+  rememberDirection: boolean
 }
 

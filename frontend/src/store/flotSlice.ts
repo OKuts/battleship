@@ -4,7 +4,6 @@ import {IInitialFlot} from "./types/ship";
 import {getSeaArr} from "../utils/getSeaArr";
 import {getRandomIndex} from "../utils/getRandomIndex";
 
-
 const initialState: IInitialFlot = {
   flot: initFlot(),
   selectedShip: null,
@@ -18,6 +17,7 @@ const initialState: IInitialFlot = {
   dy: 0,
   rememberX: 0,
   rememberY: 0,
+  rememberDirection: true
 }
 
 export const flotSlice = createSlice({
@@ -37,25 +37,37 @@ export const flotSlice = createSlice({
     initFlotAuto(state) {
       state.flot = initFlot()
       state.isReady = false
-      const emptyCells = getSeaArr()
+      let emptyCells = getSeaArr()
+      let count = 9
       state.flot.forEach((ship, i) => {
-        const randomDirection = !!getRandomIndex(2)
-        const randomCell = getRandomIndex(emptyCells.length)
-        const cell = emptyCells[randomCell]
-        const x = Number(cell[1])
-        const y = Number(cell[0])
-        const randomId = ship.id + y + x
-        if (isCoordinatesIn(x, y, randomDirection, Number(ship.id[0]))) {
-          state.flot[i] = {
-            ...state.flot[1],
-            id: randomId,
-            x: Number(cell[1]) * 30,
-            y: Number(cell[0]) * 30.,
-            direction: randomDirection,
-          }
-        }
+        do {
+          const randomDirection = !!getRandomIndex(2)
+          const randomCell = getRandomIndex(emptyCells.length)
+          const cell = emptyCells[randomCell]
+          const x = Number(cell[1])
+          const y = Number(cell[0])
+          if (isCoordinatesIn(x, y, randomDirection, Number(ship.id[0]))) {
+            const tempFlot = [...state.flot]
+            tempFlot[i] = {
+              ...state.flot[i],
+              id: ship.id + y + x,
+              x: Number(cell[1]) * 30,
+              y: Number(cell[0]) * 30,
+              direction: randomDirection,
+            }
+            console.log(isTryToPlace(tempFlot));
+            console.log(tempFlot);
+            
+            if (isTryToPlace(tempFlot)) {
+              state.flot[i] = tempFlot[i]
+              
+              count--
+            }
+          } 
+        } while (count > 0)
       })
     },
+
 
     setIsCtrlPressed(state, action: PayloadAction<boolean>) {
       if (state.selectedShip !== null) {
@@ -86,25 +98,27 @@ export const flotSlice = createSlice({
     setMouseLeftPress(state, action: PayloadAction<boolean>) {
       state.isMouseLeftPress = action.payload
       if (state.selectedShip !== null) {
-        const ship = state.flot[state.selectedShip]
+        const ship = {...state.flot[state.selectedShip]}
+        const selectedShip = state.flot[state.selectedShip]
         const x = Math.round(ship.x / 30)
         const y = Math.round(ship.y / 30)
+        let flag = true
         if (isCoordinatesIn(x, y, ship.direction, Number(ship.id[0]))) {
           ship.x = x * 30
           ship.y = y * 30
           ship.isOnSea = true
-          if (!isTryToPlace(state.flot)) {
-            ship.x = state.rememberX
-            ship.y = state.rememberY
-            ship.direction = true
-            ship.isOnSea = false
-          } else {
-            ship.id = ship.id.slice(0, 3) + y + x
-          }
-        } else {
-          ship.x = state.rememberX
-          ship.y = state.rememberY
-          ship.direction = true
+          const tryFlot = [...state.flot]
+          tryFlot[state.selectedShip] = ship
+          if (isTryToPlace(tryFlot)) {
+            state.flot[state.selectedShip] = ship
+            selectedShip.id = ship.id.slice(0, 3) + y + x
+            flag = false
+          } 
+        } 
+        if (flag) {
+          selectedShip.x = state.rememberX
+          selectedShip.y = state.rememberY
+          selectedShip.direction = state.rememberDirection
         }
         state.selectedShip = null
         state.rerender = !state.rerender
@@ -119,8 +133,9 @@ export const flotSlice = createSlice({
       if (state.selectedShip !== null) {
         state.rememberX = state.flot[state.selectedShip].x
         state.rememberY = state.flot[state.selectedShip].y
+        state.rememberDirection = state.flot[state.selectedShip].direction
       }
-    },
+    }
 
   },
 })
