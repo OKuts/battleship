@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
-  controlIsReady, getShipAround, initFlot, isCoordinatesIn,
-  isTryToPlace, getSeaArr, getRandomIndex, isCellEmpty
+  controlIsReady, getRandomIndex, getSeaArr, getShipAround,
+  initFlot, isCoordinatesIn, isTryToPlace
 } from "../utils";
 import {IInitialFlot} from "./types/ship";
 import {getField} from "../utils/getField";
+import {createLogger} from "vite";
 
 const initialState: IInitialFlot = {
   flot: initFlot(),
@@ -115,7 +116,6 @@ export const flotSlice = createSlice({
         if (isCoordinatesIn(x, y, ship.direction, Number(ship.id[0]))) {
           ship.x = x * 30
           ship.y = y * 30
-          ship.isOnSea = true
           const tryFlot = [...state.flot]
           tryFlot[state.selectedShip] = ship
           if (isTryToPlace(tryFlot)) {
@@ -165,8 +165,7 @@ export const flotSlice = createSlice({
     },
 
     nextStep(state, action: PayloadAction<string>) {
-        state.shotField[action.payload] = state.enemyField[action.payload]
-          ? true : false
+      state.shotField[action.payload] = !!state.enemyField[action.payload] && true
     }
   },
 })

@@ -19,7 +19,7 @@ export const App: FC = () => {
   } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
-    if (begin[0].x && begin[0].y && dx && dy && isMouseLeftPress) {
+    if (begin.length && dx && dy && isMouseLeftPress) {
       dispatch(changePositionShip({x: x - begin[0].x - dx, y: y - begin[0].y - dy}))
     }
   }
