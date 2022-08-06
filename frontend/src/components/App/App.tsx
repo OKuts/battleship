@@ -7,8 +7,6 @@ import {
   changePositionShip, initFlotAuto, setIsCtrlPressed, setMessageReady,
   setMouseLeftPress, updateFlot, updateSeaEnemy,
 } from '../../store';
-import {SeaMy} from "../Sea/SeaMy";
-import {SeaEnemy} from "../Sea/SeaEnemy";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {Modal} from "../Modal/Modal";
 import {Message} from "../Message/Message";
@@ -17,12 +15,12 @@ import {Message} from "../Message/Message";
 export const App: FC = () => {
   const dispatch = useAppDispatch()
   const {
-    beginX, beginY, dx, dy, isMouseLeftPress, gameText
+    begin, dx, dy, isMouseLeftPress, gameText
   } = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
-    if (beginX && beginY && dx && dy && isMouseLeftPress) {
-      dispatch(changePositionShip({x: x - beginX - dx, y: y - beginY - dy}))
+    if (begin[0].x && begin[0].y && dx && dy && isMouseLeftPress) {
+      dispatch(changePositionShip({x: x - begin[0].x - dx, y: y - begin[0].y - dy}))
     }
   }
   const handlerCtrlUp = function (e: KeyboardEvent) {
@@ -36,20 +34,25 @@ export const App: FC = () => {
     return
   }, [])
 
+  useEffect(() => {
+    dispatch(initFlotAuto())
+    dispatch(updateFlot())
+  }, [])
+
   return (
     <div
       onMouseMove={(e) => handlerMouseMove(e.clientX, e.clientY)}
       onMouseUp={() => dispatch(setMouseLeftPress(false))}
       className={isMouseLeftPress ? st.mouseOff : st.app}>
       <div className={st.field}>
-        <BattleField port children={<SeaMy/>} />
+        <BattleField isMy/>
       </div>
       <div className={st.buttons}>
         <Button text='Auto' func={[initFlotAuto, setMessageReady]}/>
-        <Button text='Reset' func={[updateFlot, updateSeaEnemy]}/>
+        <Button text='Reset' func={[updateSeaEnemy, initFlotAuto, updateFlot]}/>
       </div>
       <div className={st.field}>
-        <BattleField children={<SeaEnemy/>} />
+        <BattleField/>
       </div>
       <Modal children={<Message text={gameText}/>}/>
      </div>

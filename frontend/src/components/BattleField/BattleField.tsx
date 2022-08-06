@@ -1,14 +1,14 @@
-import { FC, ReactNode} from 'react'
+import { FC } from 'react'
 import { Port } from '../Port/Port'
 import st from './BattleField.module.scss'
 import { Line } from './Line'
+import {Sea} from "../Sea/Sea";
 
 interface IBattleProps {
-  children: ReactNode
-  port?: boolean
+  isMy?: boolean
 }
 
-export const BattleField: FC<IBattleProps> = ({children, port}) => {
+export const BattleField: FC<IBattleProps> = ({ isMy = false}) => {
   return (
     <div>
     <div className={st.numberLine}>
@@ -20,8 +20,8 @@ export const BattleField: FC<IBattleProps> = ({children, port}) => {
         <Line start={65}/>
       </div>
       <div className={st.field }>
-        {children}
-        {port && <Port/>}
+        <Sea isMy = {isMy}/>
+        {isMy && <Port/>}
       </div>
     </div>
   </div>

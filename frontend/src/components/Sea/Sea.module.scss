@@ -19,12 +19,23 @@
   background-color: rgb(243, 87, 87);
 }
 
-.notUse {
-  background-color: rgb(219, 231, 200);
-}
-
 .ship {
   background-color: cyan;
+}
+
+.empty {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    height: 5px;
+    width: 5px;
+    background-color: #888888;
+    border-radius: 50%;
+  }
 }
 
 

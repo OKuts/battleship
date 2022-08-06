@@ -2,7 +2,7 @@ export interface IEnemyField {
   [key: string]: null | boolean
 }
 
-export const initEnemyField = (): IEnemyField => {
+export const initField = (): IEnemyField => {
   const field: IEnemyField = {}
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {

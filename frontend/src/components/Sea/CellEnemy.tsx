@@ -10,8 +10,7 @@ interface CellEnemyProps {
 
 export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
   const dispatch = useAppDispatch()
-  const {enemyField} = useAppSelector(state => state.enemy)
-  const {isReady, flot} = useAppSelector(state => state.flot)
+  const {isReady, flot, shotField} = useAppSelector(state => state.flot)
 
   const handlerClick = (id: string) => {
     if (isReady || controlIsReady(flot)) {
@@ -20,17 +19,17 @@ export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
     }
   }
 
-  const setClassName = (value: boolean | null) => {
-    switch (value) {
-      case true : return 'use'
-      case false: return 'notUse'
-      default: return ''
-    }
+  const pointTsx = () => {
+    return <div className={st.empty}>
+      <div></div>
+    </div>
   }
 
   return <td
     onClick={() => handlerClick(id)}
-    className={st[setClassName(enemyField[id])]} id={id}>
+    className={shotField[id] === true ? st.use : ''}
+    id={id}>
+    {shotField[id] === false && pointTsx()}
   </td>
 
 }

@@ -9,18 +9,19 @@ import {
 
 type ShipTypeProps = {
   ship: ShipClass
+  field: number
 }
 
-export const Ship: FC<ShipTypeProps> = ({ship}) => {
+export const Ship: FC<ShipTypeProps> = ({ship, field}) => {
   const dispatch = useAppDispatch()
-  const {beginX, beginY, isReady} = useAppSelector(state => state.flot)
+  const {isReady, begin} = useAppSelector(state => state.flot)
 
   const handlerMouseDown = (x: number, y: number, ship: ShipClass) => {
     if (!isReady) {
       dispatch(setMouseLeftPress(true))
       dispatch(setSelectedShip(Number(ship.id[2])))
-      if (beginX && beginY && ship.x && ship.y) {
-        dispatch(setDxDy({x: x - beginX - ship.x, y: y - beginY - ship.y}))
+      if (begin[field].x && begin[field].y && ship.x && ship.y) {
+        dispatch(setDxDy({x: x - begin[field].x - ship.x, y: y - begin[field].y - ship.y}))
         dispatch(setRemember())
       }
     }

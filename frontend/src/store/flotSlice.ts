@@ -1,18 +1,21 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
   controlIsReady, getShipAround, initFlot, isCoordinatesIn,
-  isTryToPlace, getSeaArr, getRandomIndex} from "../utils";
+  isTryToPlace, getSeaArr, getRandomIndex, isCellEmpty
+} from "../utils";
 import {IInitialFlot} from "./types/ship";
+import {getField} from "../utils/getField";
 
 const initialState: IInitialFlot = {
   flot: initFlot(),
+  enemyField: {},
+  shotField: {},
   selectedShip: null,
   isReady: false,
   gameText: 'Try',
   rerender: false,
   isCtrlPressed: false,
-  beginX: 0,
-  beginY: 0,
+  begin: [],
   isMouseLeftPress: false,
   dx: 0,
   dy: 0,
@@ -44,12 +47,13 @@ export const flotSlice = createSlice({
       state.flot.forEach((ship, i) => {
         let flag = true
         do {
-           const randomDirection = !!getRandomIndex(2)
+          let yx = ''
+          const randomDirection = !!getRandomIndex(2)
           const randomCell = getRandomIndex(emptyCells.length)
           const cell = emptyCells[randomCell]
           const x = Number(cell[1])
           const y = Number(cell[0])
-
+          yx += `${y}${x}`
           if (isCoordinatesIn(x, y, randomDirection, Number(ship.id[0]))) {
             const tempFlot = [...state.flot]
             tempFlot[i] = {
@@ -69,6 +73,10 @@ export const flotSlice = createSlice({
           }
         } while (flag)
       })
+
+      if (!JSON.stringify(state.enemyField)[2]) {
+        state.enemyField = getField([...state.flot])
+      }
     },
 
 
@@ -88,9 +96,7 @@ export const flotSlice = createSlice({
     },
 
     setBegin(state, action) {
-      const {beginX, beginY} = action.payload
-      state.beginX = beginX
-      state.beginY = beginY
+      state.begin.push(action.payload)
     },
 
     setDxDy(state, action) {
@@ -130,8 +136,10 @@ export const flotSlice = createSlice({
     },
 
     setIsReady(state) {
-      state.isReady = controlIsReady(state.flot)
-      state.gameText = 'Go'
+      if (!state.isReady) {
+        state.isReady = true
+        state.gameText = 'Go'
+      }
     },
 
     setMessageReady(state) {
@@ -148,6 +156,17 @@ export const flotSlice = createSlice({
         state.rememberY = state.flot[state.selectedShip].y
         state.rememberDirection = state.flot[state.selectedShip].direction
       }
+    },
+
+    updateSeaEnemy(state) {
+      state.enemyField = {}
+      state.shotField = {}
+      state.rerender = !state.rerender
+    },
+
+    nextStep(state, action: PayloadAction<string>) {
+        state.shotField[action.payload] = state.enemyField[action.payload]
+          ? true : false
     }
   },
 })
@@ -155,6 +174,7 @@ export const flotSlice = createSlice({
 export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
   changeMessage, setBegin, setDxDy, setMouseLeftPress, setRemember,
-  setIsReady, initFlotAuto, setMessageReady
+  setIsReady, initFlotAuto, setMessageReady,
+  nextStep, updateSeaEnemy
 } = flotSlice.actions
 export default flotSlice.reducer
