@@ -11,8 +11,10 @@ export interface IField {
 
 export interface IInitialFlot {
   flot: ShipClass[]
+  shotMyField: IField
   enemyField: IField
-  shotField: IField
+  myField: IField
+  shotEnemyField: IField
   selectedShip: number | null
   isReady: boolean
   gameText: string

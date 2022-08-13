@@ -1,16 +1,18 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
   controlIsReady, getRandomIndex, getSeaArr, getShipAround,
-  initFlot, isCoordinatesIn, isTryToPlace
+  initFlot, isCoordinatesIn, isTryToPlace, shotToShip
 } from "../utils";
 import {IInitialFlot} from "./types/ship";
 import {getField} from "../utils/getField";
-import {createLogger} from "vite";
+
 
 const initialState: IInitialFlot = {
   flot: initFlot(),
   enemyField: {},
-  shotField: {},
+  myField: {},
+  shotMyField: {},
+  shotEnemyField: {},
   selectedShip: null,
   isReady: false,
   gameText: 'Try',
@@ -75,9 +77,9 @@ export const flotSlice = createSlice({
         } while (flag)
       })
 
-      if (!JSON.stringify(state.enemyField)[2]) {
-        state.enemyField = getField([...state.flot])
-      }
+      !JSON.stringify(state.enemyField)[2]
+        ? state.enemyField = getField(state.flot)
+        : state.myField = getField(state.flot)
     },
 
 
@@ -160,12 +162,21 @@ export const flotSlice = createSlice({
 
     updateSeaEnemy(state) {
       state.enemyField = {}
-      state.shotField = {}
+      state.shotEnemyField = {}
       state.rerender = !state.rerender
     },
 
     nextStep(state, action: PayloadAction<string>) {
-      state.shotField[action.payload] = !!state.enemyField[action.payload] && true
+      state.shotEnemyField[action.payload] = !!state.enemyField[action.payload] && true
+    },
+
+    nextBotStep(state, action: PayloadAction<string>) {
+      const wound = shotToShip(state.flot, action.payload)
+      if (!!wound) {
+        const [n, cell] = wound
+        state.flot[n].wounds[cell] = true
+      }
+      state.shotMyField[action.payload] = !!state.myField[action.payload]
     }
   },
 })
@@ -174,6 +185,6 @@ export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
   changeMessage, setBegin, setDxDy, setMouseLeftPress, setRemember,
   setIsReady, initFlotAuto, setMessageReady,
-  nextStep, updateSeaEnemy
+  nextStep, updateSeaEnemy, nextBotStep
 } = flotSlice.actions
 export default flotSlice.reducer

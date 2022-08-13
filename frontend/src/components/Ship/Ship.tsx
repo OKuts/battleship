@@ -1,11 +1,11 @@
 import {FC} from "react"
 import st from './Ship.module.scss'
-import {ShipPart} from "..";
-import {ShipClass} from "../../classes/ShipClass";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import {ShipPart} from ".."
+import {ShipClass} from "../../classes/ShipClass"
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch"
 import {
   setDxDy, setMouseLeftPress, setRemember, setSelectedShip
-} from "../../store";
+} from "../../store"
 
 type ShipTypeProps = {
   ship: ShipClass
@@ -34,6 +34,9 @@ export const Ship: FC<ShipTypeProps> = ({ship, field}) => {
     style={{top: ship.y - 1 || 0, left: ship.x - 2 || 0 }}
   >
     {Array(Number(ship.id[0])).fill('').map((_, i) =>
-      <ShipPart key={i} id={i}/>)}
+      <ShipPart
+        key={i} id={i}
+        wound = {ship.wounds[i]}
+      />)}
   </div>
 }

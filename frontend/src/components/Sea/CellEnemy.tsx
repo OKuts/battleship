@@ -1,8 +1,9 @@
 import {FC} from 'react'
 import st from './Sea.module.scss'
 import {useAppDispatch, useAppSelector} from '../../hooks/useAppDispatch'
-import {nextStep, setIsReady} from "../../store";
-import {controlIsReady} from "../../utils";
+import {nextBotStep, nextStep, setIsReady} from "../../store";
+import {controlIsReady, getRandomIndex} from "../../utils";
+import {Point} from "./Point";
 
 interface CellEnemyProps {
   id: string
@@ -10,26 +11,24 @@ interface CellEnemyProps {
 
 export const CellEnemy: FC<CellEnemyProps> = ({id}) => {
   const dispatch = useAppDispatch()
-  const {isReady, flot, shotField} = useAppSelector(state => state.flot)
+  const {isReady, flot, shotEnemyField} = useAppSelector(state => state.flot)
 
   const handlerClick = (id: string) => {
     if (isReady || controlIsReady(flot)) {
       dispatch(setIsReady())
       dispatch(nextStep(id))
+      setTimeout(()=>{
+        const id = String(getRandomIndex(9)) + String(getRandomIndex(9))
+        dispatch(nextBotStep(id))
+      }, 500)
     }
-  }
-
-  const pointTsx = () => {
-    return <div className={st.empty}>
-      <div></div>
-    </div>
   }
 
   return <td
     onClick={() => handlerClick(id)}
-    className={shotField[id] === true ? st.use : ''}
+    className={shotEnemyField[id] === true ? st.use : ''}
     id={id}>
-    {shotField[id] === false && pointTsx()}
+    {shotEnemyField[id] === false && <Point/>}
   </td>
 
 }
