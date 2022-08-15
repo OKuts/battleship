@@ -4,26 +4,29 @@ import st from './App.module.scss'
 import {BattleField} from '..'
 import {Button} from '../../elements/Button/Button';
 import {
-  changePositionShip, initFlotAuto, setIsCtrlPressed, setMessageReady,
+  changePositionShip, initFlotAuto, setConnection, setIsCtrlPressed, setMessageReady,
   setMouseLeftPress, updateFlot, updateSeaEnemy,
 } from '../../store';
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatch";
 import {Modal} from "../Modal/Modal";
 import {Message} from "../Message/Message";
 
+import {useGetUser} from "../../hooks/useGetUser";
+import {RegisterForm} from "../RegisterForm/RegisterForm";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
-  const {
-    begin, dx, dy, isMouseLeftPress, gameText
-  } = useAppSelector(state => state.flot)
+  const userData = useGetUser()
+
+  const {user} = useAppSelector(state => state.user)
+  const { begin, dx, dy, isMouseLeftPress, gameText} = useAppSelector(state => state.flot)
 
   const handlerMouseMove = (x: number, y: number) => {
     if (begin.length && dx && dy && isMouseLeftPress) {
       dispatch(changePositionShip({x: x - begin[0].x - dx, y: y - begin[0].y - dy}))
     }
   }
-  const handlerCtrlUp = function (e: KeyboardEvent) {
+  const handlerCtrlUp =  (e: KeyboardEvent) => {
     if (e.key === 'Control') {
       dispatch(setIsCtrlPressed(true))
     }
@@ -35,6 +38,7 @@ export const App: FC = () => {
   }, [])
 
   useEffect(() => {
+    dispatch(setConnection())
     dispatch(initFlotAuto())
     dispatch(updateFlot())
   }, [])
@@ -54,6 +58,7 @@ export const App: FC = () => {
       <div className={st.field}>
         <BattleField/>
       </div>
+      {(!userData && !user) && <RegisterForm/>}
       <Modal children={<Message text={gameText}/>}/>
      </div>
   )

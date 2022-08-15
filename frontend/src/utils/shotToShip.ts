@@ -7,14 +7,14 @@ export const shotToShip = (flot: ShipClass[], yx: string): string=> {
     const shipX = flot[j].id[4]
 
     if (shipY === y && flot[j].direction) {
-      for (let i = 0; i < flot[j].id[0]; i++) {
+      for (let i = 0; i < +flot[j].id[0]; i++) {
         if (y + (i + +x) === yx) return `${j}${i}`
       }
     }
 
     if (shipX === x && !flot[j].direction) {
-      for (let i = 0; i < flot[j].id[0]; i++) {
-        if (i+(i + +y) === yx) return `${j}${i}`
+      for (let i = 0; i < +flot[j].id[0]; i++) {
+        if (String(i+(i + +y)) === yx) return `${j}${i}`
       }
     }
   }

@@ -163,6 +163,11 @@ export const flotSlice = createSlice({
     updateSeaEnemy(state) {
       state.enemyField = {}
       state.shotEnemyField = {}
+      state.shotMyField = {}
+      state.rerender = !state.rerender
+    },
+
+    rerender (state) {
       state.rerender = !state.rerender
     },
 
@@ -174,7 +179,7 @@ export const flotSlice = createSlice({
       const wound = shotToShip(state.flot, action.payload)
       if (!!wound) {
         const [n, cell] = wound
-        state.flot[n].wounds[cell] = true
+        state.flot[+n].wounds[+cell] = true
       }
       state.shotMyField[action.payload] = !!state.myField[action.payload]
     }
@@ -185,6 +190,6 @@ export const {
   setSelectedShip, changePositionShip, updateFlot, setIsCtrlPressed,
   changeMessage, setBegin, setDxDy, setMouseLeftPress, setRemember,
   setIsReady, initFlotAuto, setMessageReady,
-  nextStep, updateSeaEnemy, nextBotStep
+  nextStep, updateSeaEnemy, nextBotStep, rerender
 } = flotSlice.actions
 export default flotSlice.reducer
